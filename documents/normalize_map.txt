@@ -1,0 +1,20 @@
+La idea es pasar de esto:
+
+map->grid = {
+	"1111",
+	"1001",
+	"1N1",
+	"111111"
+};
+
+A esto:
+
+map->grid = {
+	"1111  ",
+	"1001  ",
+	"1N1   ",
+	"111111"
+};
+
+Si la longitud es 6 por ej.
+

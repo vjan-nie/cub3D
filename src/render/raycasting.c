@@ -1,0 +1,179 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
+/*   Updated: 2025/11/19 12:05:02 by vjan-nie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+// Inicializa las variables del rayo para una columna de pantalla
+// Calcula dirección, posición en mapa y pasos del DDA de forma segura
+static void	init_ray_vars(t_cub3d *cub, t_ray *r, int x)
+{
+	t_player	*p;
+	double		camera_x;
+
+	p = &cub->player;
+	camera_x = 2.0 * x / (double)cub->screen_width - 1.0;
+
+	r->dir_x = p->dir_x + p->plane_x * camera_x;
+	r->dir_y = p->dir_y + p->plane_y * camera_x;
+
+	r->map_x = (int)p->x;
+	r->map_y = (int)p->y;
+
+	if (r->map_y < 0)
+		r->map_y = 0;
+	if (r->map_y >= cub->map.height)
+		r->map_y = cub->map.height - 1;
+
+	if (r->map_x < 0)
+		r->map_x = 0;
+	if (r->map_x >= (int)ft_strlen(cub->map.grid[r->map_y]))
+		r->map_x = (int)ft_strlen(cub->map.grid[r->map_y]) - 1;
+
+	calc_delta(r);
+	calc_step_side(p, r);
+}
+
+// DDA seguro: avanza paso a paso hasta golpear un muro o borde del mapa
+static void	perform_dda(t_cub3d *cub, t_ray *r)
+{
+	r->hit = 0;
+
+	while (r->hit == 0)
+	{
+		if (r->side_x < r->side_y)
+		{
+			r->side_x += r->delta_x;
+			r->map_x += r->step_x;
+			r->side = 0;
+		}
+		else
+		{
+			r->side_y += r->delta_y;
+			r->map_y += r->step_y;
+			r->side = 1;
+		}
+
+		if (r->map_y < 0 || r->map_y >= cub->map.height)
+		{
+			r->hit = 1;
+			break;
+		}
+
+		if (r->map_x < 0)
+		{
+			r->hit = 1;
+			break;
+		}
+
+		if (r->map_x >= (int)ft_strlen(cub->map.grid[r->map_y]))
+		{
+			r->hit = 1;
+			break;
+		}
+
+		if (cub->map.grid[r->map_y][r->map_x] == '1')
+			r->hit = 1;
+	}
+}
+
+// Selecciona la textura según la cara del muro y la dirección del rayo
+static t_img	*select_texture(t_cub3d *cub, t_ray *r)
+{
+	if (r->side == 0)
+	{
+		if (r->step_x < 0)
+			return &cub->textures[0]; // NO
+		return &cub->textures[1];     // SO
+	}
+	else
+	{
+		if (r->step_y < 0)
+			return &cub->textures[2]; // WE
+		return &cub->textures[3];     // EA
+	}
+}
+
+// Calcula la coordenada horizontal de la textura (tex_x)
+static int	calc_tex_x(t_cub3d *cub, t_ray *r, t_img *tex)
+{
+	double	wall_x;
+	int		tex_x;
+
+	if (r->side == 0)
+		wall_x = cub->player.y + r->perp * r->dir_y;
+	else
+		wall_x = cub->player.x + r->perp * r->dir_x;
+	wall_x -= floor(wall_x);
+
+	tex_x = (int)(wall_x * tex->width);
+	if ((r->side == 0 && r->dir_x > 0) || (r->side == 1 && r->dir_y < 0))
+		tex_x = tex->width - tex_x - 1;
+
+	return tex_x;
+}
+
+// Dibuja línea vertical de pared con textura de forma segura
+static void	draw_wall_line_textured(t_cub3d *cub, t_ray *r, int x)
+{
+	t_img	*tex;
+	int		y;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	char	*dst;
+	int		d;
+
+	tex = select_texture(cub, r);
+	tex_x = calc_tex_x(cub, r, tex);
+
+	if (tex_x < 0)
+		tex_x = 0;
+	if (tex_x >= tex->width)
+		tex_x = tex->width - 1;
+
+	y = r->start;
+	while (y <= r->end)
+	{
+		d = y * 256 - cub->screen_height * 128 + r->line_h * 128;
+		tex_y = (d * tex->height / r->line_h) / 256;
+
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y >= tex->height)
+			tex_y = tex->height - 1;
+
+		dst = tex->data + (tex_y * tex->line_len + tex_x * (tex->bpp / 8));
+		color = (unsigned char)dst[2] << 16 | (unsigned char)dst[1] << 8
+				| (unsigned char)dst[0];
+		put_pixel(&cub->frame, x, y, color);
+		y++;
+	}
+}
+
+
+// Raycasting completo: lanza un rayo por cada columna de la pantalla
+void	raycast(t_cub3d *cub)
+{
+	t_ray	r;
+	int		x;
+
+	x = 0;
+	while (x < cub->screen_width)
+	{
+		init_ray_vars(cub, &r, x);
+		perform_dda(cub, &r);
+		calc_line_params(cub, &r);
+		draw_wall_line_textured(cub, &r, x);
+		x++;
+	}
+}
+
