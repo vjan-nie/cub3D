@@ -6,7 +6,7 @@
 #    By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 12:24:16 by vjan-nie          #+#    #+#              #
-#    Updated: 2025/11/26 17:09:46 by sergio-jime      ###   ########.fr        #
+#    Updated: 2025/11/26 22:22:54 by sergio-jime      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ LIBFT_INCLUDE	=	-I$(LIBFT_DIR)/include
 # Minilibx
 
 MINILIBX		=	$(MINILIBX_DIR)/libmlx_linux.a
+MINILIBX_INCLUDE=	-I$(MINILIBX_DIR)
 
 # **************************************************************************** #
 # Source files
@@ -74,14 +75,13 @@ OBJ_DIRS		=	$(OBJ_DIR)\
 # Compiling rules
 
 CC				=	cc
-CFLAGS			=	-Wall -Wextra -Werror -O2
+CFLAGS			=	-Wall -Wextra -Werror -O2 -g
 MINILIBX_FLAGS	=	-L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 # **************************************************************************** #
 # Includes
 
 INCLUDES		=	-I$(INCLUDE_DIR) $(LIBFT_INCLUDE) $(MINILIBX_INCLUDE)
-MINILIBX_INCLUDE=	-I$(MINILIBX_DIR)
 
 # **************************************************************************** #
 # Colors
@@ -103,12 +103,12 @@ $(NAME): $(OBJ) $(LIBFT) $(MINILIBX)
 
 $(LIBFT):
 	@echo "$(YELLOW)Compiling libft...$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -s -C $(LIBFT_DIR)
 	@echo "$(GREEN)✓ libft compiled!$(RESET)"
 
 $(MINILIBX):
 	@echo "$(YELLOW)Compiling minilibx...$(RESET)"
-	@$(MAKE) -C $(MINILIBX_DIR) || true
+	@$(MAKE) -s -C $(MINILIBX_DIR) || true
 	@echo "$(GREEN)✓ minilibx compiled!$(RESET)"
 
 $(OBJ_DIRS):
@@ -120,16 +120,16 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIRS)
 
 clean:
 	@echo "$(RED)Cleaning object files...$(RESET)"
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 	@rm -rf $(OBJ_DIRS)
-	@$(MAKE) -C $(LIBFT_DIR) clean
-	-@$(MAKE) -C $(MINILIBX_DIR) clean || true
+	@$(MAKE) -s -C $(LIBFT_DIR) clean
+	-@$(MAKE) -s -C $(MINILIBX_DIR) clean || true
 	@echo "$(GREEN)✓ Clean complete!$(RESET)"
 
 fclean: clean
 	@echo "$(YELLOW)Removing $(NAME)...$(RESET)"
-	rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
+	@$(MAKE) -s -C $(LIBFT_DIR) fclean
 	@echo "$(GREEN)✓ Full clean complete!$(RESET)"
 
 re: fclean all
