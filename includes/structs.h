@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:31:48 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/24 14:11:30 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:29:08 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct 	s_map
 {
 	char	**grid;        // Mapa en forma de matriz de chars ('0','1','N','S','E','W')
-	int		width;          // Ancho del mapa en tiles
+	int		width;          // Ancho del mapa en tiles ("baldosas")
 	int		height;         // Alto del mapa en tiles
 	char	*tex_paths[4]; // Rutas a las texturas NO, SO, WE, EA
 	int		floor_color;    // Color del suelo (F R,G,B)
@@ -35,7 +35,11 @@ typedef struct	s_player
 	double 	rot_speed;  // Velocidad de rotación
 }			t_player;
 
-/* ndica el orden de los bytes en la representación de color dentro del buffer de la imagen.
+/* IMAGE: Se "dibuja" la imagen en buffer antes de cargarla de golpe y terminada a la ventana.
+Si se renderizase la ventana a tiempo real, tendría que ir pixel por pixel en orden, lo que es demasiado lento,
+así que daría lugar a distorsión de la imagen y nada de fluidez.
+
+endian: indica el orden de los bytes en la representación de color dentro del buffer de la imagen.
 
 En MLX (MiniLibX):
 
@@ -95,26 +99,31 @@ typedef enum e_keycode
 	KEY_ESC = 65307
 }	t_keycode;
 
-/* Se usa uno por cada columna de la pantalla. */
+/* Se usa uno por cada columna de la pantalla. 
+DDA algorithm (Digital Differential Analyzer):
+Recorrer tile por tile y comprobando qué casillas toca el rayo.
+Es un algoritmo preciso y eficiente sin recurrir a trigonometría pesada.
+*/
 typedef struct	s_ray
 {
 	double	dir_x;      // Dirección del rayo
 	double	dir_y;
-	double	side_x;     // Distancia desde el origen hasta el primer side_x
+	double	side_x;     // Distancia desde el origen hasta la próxima línea vertical *punto de partida del DDA
 	double	side_y;
-	double	delta_x;    // Distancia entre cruces verticales del grid
-	double	delta_y;    // Distancia entre cruces horizontales
-	double	perp;       // Distancia perpendicular a la pared (corregida)
-	int		map_x;      // Cuadrícula actual del mapa (x)
-	int		map_y;      // Cuadrícula actual del mapa (y)
-	int		step_x;     // +1 o -1, dirección del DDA
+	double	delta_x;    // Distancia entre 2 cruces verticales del grid
+	double	delta_y;
+	double	perp;       // Distancia perpendicular a la pared (corregida): 
+						//cálculo de longitud del rayo respecto al plano de cámara, y no la distancia real con el jugador (evitar fish-eye)
+	int		map_x;      // Cuadrícula actual del mapa donde empieza el rayo (x)
+	int		map_y;
+	int		step_x;     // +1 o -1, dirección del DDA: dirección en la que se mueve el DDA.
 	int		step_y;
-	int		side;       // 0 = golpe vertical, 1 = horizontal
+	int		side;       // qué tipo de línea de la cuadrícula (grid) golpeó el rayo. 0 = golpe vertical, 1 = horizontal
 	int		hit;        // 1 si el rayo golpea una pared
-	int		line_h;     // Altura en pixel de la pared proyectada
+	int		line_h;     // Altura en pixeles de la pared proyectada: de start a end
 	int		start;      // Pixel donde empieza la pared
 	int		end;        // Pixel donde termina la pared
-	int		color;      // Color final del píxel (si no usas texturas)
+	int		color;      // Color final del píxel (si no se usan texturas)
 }			t_ray;
 
 

@@ -6,11 +6,35 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 12:05:02 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:57:20 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/* 
+Algoritmo DDA: Lanzar rayos 1 a 1 (1 rayo por cada bit de la imagen que se proyecta en la ventana)
+
+1) ¿Hacia adónde apunta el rayo? (dir_x, dir_y)
+
+2) ¿Cuánto avanza el rayo para cruzar una línea de la cuadrícula(grid)? (delta_x, delta_y)
+
+3) ¿Cuál es la primera línea vert y horiz que toca? (side_x. side_y)
+
+4) Iterar:
+
+	- Comparar side_x y side_y y avanzar a la celda correspondiente (el rayo avanza como en escalones o zig zag):
+		if (side_x < side_y) 
+			avanzamos en el eje x
+		else 
+			avanzamos en el eje y
+
+	- Sumamos delta_x o delta_y según corresponda y comprobamos la posición:
+		if (map[map_x][map_y] == '1')
+			el rayo ha chocado, terminamos de iterar y hacemos cálculos para dibujar.
+		else
+			seguimos iterando hasta que choque.
+ */
 
 // Inicializa las variables del rayo para una columna de pantalla
 // Calcula dirección, posición en mapa y pasos del DDA de forma segura

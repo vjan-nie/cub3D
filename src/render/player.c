@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:46:20 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:39:00 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:44:23 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_player(t_player *p, t_map *map)
 	char	dir;
 
 	dir = get_player_dir(map, p); // Determina la posición y dirección inicial
-	p->move_speed = 0.05;          // Velocidad de movimiento por frame
+	p->move_speed = 0.05;          // Velocidad de movimiento por frame (definir en header para tenerlo a mano??) (podría variar dentro del juego para correr o caminar :) )
 	p->rot_speed = 0.05;           // Velocidad de rotación por frame
 	set_dir_and_plane(p, dir);      // Configura los vectores de dirección y plano
 }

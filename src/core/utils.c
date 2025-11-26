@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:40:43 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:17:43 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:38:57 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	cleanup_and_exit(t_cub3d *cub)
 */
 bool	init_window(t_cub3d *cub)
 {
-	cub->screen_width = 1024;
+	cub->screen_width = 1024; //igual se puede definir en el header para cambiarlo a voluntad?
 	cub->screen_height = 768;
 	cub->win = mlx_new_window(cub->mlx,
 			cub->screen_width, cub->screen_height, "cub3D");
