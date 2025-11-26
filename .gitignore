@@ -1,0 +1,13 @@
+#exec
+cub3D
+*.o
+*.a
+#temp files
+*~
+.swp
+.DS_Store
+#compilation paths
+obj/
+.vscode/
+*.dSYM/
+#other stuff
