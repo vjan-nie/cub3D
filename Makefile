@@ -6,7 +6,7 @@
 #    By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 12:24:16 by vjan-nie          #+#    #+#              #
-#    Updated: 2025/11/26 22:22:54 by sergio-jime      ###   ########.fr        #
+#    Updated: 2025/11/27 01:23:32 by sergio-jime      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ MINILIBX_INCLUDE=	-I$(MINILIBX_DIR)
 SRC				=	$(SRC_DIR)/$(CORE_DIR)/cub3d.c\
 					$(SRC_DIR)/$(CORE_DIR)/key_handler.c\
 					$(SRC_DIR)/$(CORE_DIR)/utils.c\
+					$(SRC_DIR)/$(CORE_DIR)/cleaner.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map_utils.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map_utils2.c\
