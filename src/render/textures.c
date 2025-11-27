@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 18:01:08 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 11:46:46 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:18:40 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 	// Cargar la imagen XPM en memoria usando MiniLibX
 	tex->img_ptr = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
 	if (!tex->img_ptr)
-		return (ft_error("Failed to load XPM texture")); // Error si no se carga
+		return (ft_error("Failed to load XPM texture\n"), false); // Error si no se carga
 
 	tex->width = width;
 	tex->height = height;
@@ -38,7 +38,7 @@ static bool	load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 	tex->data = mlx_get_data_addr(tex->img_ptr,
 			&tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->data)
-		return (ft_error("Failed to get texture data")); // Error si falla
+		return (ft_error("Failed to get texture data\n"), false); // Error si falla
 
 	return (true); // Textura cargada correctamente
 }
@@ -53,7 +53,7 @@ static bool	check_paths(t_map *map)
 	while (i < 4)
 	{
 		if (!map->tex_paths[i])
-			return (ft_error("Missing texture path")); // Faltan rutas
+			return (ft_error("Missing texture path\n"), false); // Faltan rutas
 		i++;
 	}
 	return (true); // Todas las rutas existen

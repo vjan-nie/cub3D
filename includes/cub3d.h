@@ -3,39 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:28:45 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 02:31:04 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+ * @file cub3d.h
+ * @brief Main header file containing all necessary includes, constant
+ * definitions, and function prototypes for the cub3D project.
+ * This header serves as the central interface, aggregating core utilities,
+ * parser functions, player logic, rendering routines, and memory
+ * management functions.
+ */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include <mlx.h>
 # include <stdlib.h>
-# include <fcntl.h>
+# include <stdbool.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include <limits.h>
 # include <stdio.h>
 # include <sys/stat.h>
-# include <stdbool.h>
-# include <limits.h>
 # include <math.h>
 # include "libft.h"
 # include "structs.h"
+# include <mlx.h>
+
+/* ************************************************************************** */
+/* Config */
 
 # define TILE_SIZE 64
+# define SCREEN_WIDTH 1280
+# define SCREEN_HEIGHT 720
 
-// MAIN_UTILS
-bool	ft_error(char *msg);
+/* ************************************************************************** */
+/* Main Utils */
+
+void	ft_error(char *msg);
 bool	init_window(t_cub3d *cub);
 int		close_window(t_cub3d *cub);
 int		on_key_press(int keycode, t_cub3d *cub);
 int		on_key_release(int keycode, t_cub3d *cub);
-void	cleanup_and_exit(t_cub3d *cub);
+void	cleanup_and_exit(t_cub3d *cub, int code);
+void	cleanup(t_cub3d *cub);
 
-// MAP
+/* ************************************************************************** */
+/* Map */
+
 bool	validate_map(t_map *map);
 bool	load_and_validate_map(t_map *map, const char *path);
 void	free_map(t_map *map);
@@ -48,34 +67,46 @@ int		get_max_line_length(char **grid);
 void	normalize_map(t_map *map);
 void	ft_free_array(char **array);
 
-// PARSER
+/* ************************************************************************** */
+/* Parser */
+
 bool	parse_map(t_map *map, char **lines);
 bool	parse_config(t_map *map, char **lines);
 bool	parse_texture(t_map *map, const char *line);
 bool	parse_color(t_map *map, const char *line);
 int		parse_rgb(const char *str);
 
-// PLAYER
+/* ************************************************************************** */
+/* Player */
+
 void	init_player(t_player *p, t_map *map);
 bool	is_player_direction(char c);
 char	find_player_tile(t_map *map, int *px, int *py);
 void	update_player(t_cub3d *cub);
 
-// RENDER
+/* ************************************************************************** */
+/* Render */
+
 void	render_frame(t_cub3d *cub);
 void	create_frame(t_cub3d *cub, t_img *img);
 void	put_pixel(t_img *img, int x, int y, int color);
 
-// RAYCAST
+/* ************************************************************************** */
+/* Raycast */
+
 void	raycast(t_cub3d *cub);
 void	calc_line_params(t_cub3d *cub, t_ray *r);
 void	calc_step_side(t_player *p, t_ray *r);
 void	calc_delta(t_ray *r);
 
-// TEXTURES
+/* ************************************************************************** */
+/* Load textures */
+
 bool	load_textures(t_cub3d *cub);
 
-// MOVEMENT
+/* ************************************************************************** */
+/* Movement */
+
 void	check_and_move(t_cub3d *cub, double mx, double my);
 void	move_forward(t_cub3d *cub);
 void	move_backward(t_cub3d *cub);
