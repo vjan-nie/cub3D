@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:58:26 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:25:23 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:05:06 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,14 @@ static int	copy_map_lines(t_map *map, char **lines, int start, int h)
 	{
 		map->grid[i] = ft_strdup(lines[start + i]);
 		if (!map->grid[i])
-			return (0);
+		{
+			while (i < 0)
+			{
+				free(map->grid[i - 1]);
+				i--;
+			}
+			return (free(map->grid), 0);
+		}
 		i++;
 	}
 	map->grid[h] = NULL;
@@ -94,6 +101,8 @@ bool	parse_map(t_map *map, char **lines)
 
 	start = skip_config(lines);
 	h = count_map_lines(lines, start);
+	if (h <= 0)
+		return (ft_error("Empty map\n"), false);
 	map->grid = malloc(sizeof(char *) * (h + 1));
 	if (!map->grid)
 		return (false);

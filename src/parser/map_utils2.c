@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:51:42 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 15:47:39 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/27 18:58:21 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	get_max_line_length(char **grid)
 
 	max = 0;
 	i = 0;
+	if (!grid)
+		return (0);
 	while (grid[i])
 	{
 		len = ft_strlen(grid[i]);
