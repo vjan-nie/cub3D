@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:19:29 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:15:48 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	load_and_validate_map(t_map *map, const char *path)
 
 	file_lines = read_file_lines(path);
 	if (!file_lines)
-		return (ft_error("Failed to read .cub file"));
+		return (ft_error("Failed to read .cub file\n"), false);
 
 	if (!parse_config(map, file_lines))
 		return (ft_free_array(file_lines), false);

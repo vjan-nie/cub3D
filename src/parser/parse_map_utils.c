@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:24:38 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:17:01 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ bool	parse_color(t_map *map, const char *line)
 {
 	char	**split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
-		return (ft_error("Invalid color line"));
+		return (ft_error("Invalid color line\n"), false);
 
 	int color = parse_rgb(split[1]);
 	if (color == -1)
-		return (ft_error("Invalid RGB values"));
+		return (ft_error("Invalid RGB values\n"), false);
 
 	if (!ft_strncmp(split[0], "F", 2))
 		map->floor_color = color;
 	else if (!ft_strncmp(split[0], "C", 2))
 		map->ceiling_color = color;
 	else
-		return (ft_error("Unknown color type"));
+		return (ft_error("Unknown color type\n"), false);
 
 	ft_free_array(split);
 	return (true);
@@ -88,7 +88,7 @@ bool	parse_texture(t_map *map, const char *line)
 {
 	char	**split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
-		return (ft_error("Invalid texture line"));
+		return (ft_error("Invalid texture line\n"), false);
 
 	int index = -1;
 	if (!ft_strncmp(split[0], "NO", 3)) index = 0;
@@ -97,7 +97,7 @@ bool	parse_texture(t_map *map, const char *line)
 	else if (!ft_strncmp(split[0], "EA", 3)) index = 3;
 
 	if (index == -1)
-		return (ft_error("Unknown texture direction"));
+		return (ft_error("Unknown texture direction\n"), false);
 
 	map->tex_paths[index] = ft_strdup(split[1]);
 	ft_free_array(split);
@@ -134,7 +134,7 @@ bool	parse_config(t_map *map, char **lines)
 			configs_parsed++;
 		}
 		else if (!is_line_empty(lines[i]))
-			return (ft_error("Invalid config line"));
+			return (ft_error("Invalid config line\n"), false);
 		i++;
 	}
 	return (configs_parsed == 6);

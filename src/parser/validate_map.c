@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:05:52 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:27:53 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:18:05 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static bool	validate_player_tile(t_map *map, int *count, int y, int x)
 
 	(*count)++;
 	if (*count > 1)
-		return (ft_error("More than one player in the map"));
+		return (ft_error("More than one player in the map\n"), false);
 
 	if (y == 0 || y == map->height - 1)
-		return (ft_error("Player on the edge of the map"));
+		return (ft_error("Player on the edge of the map\n"), false);
 
 	if (x == 0 || x == map->width - 1)
-		return (ft_error("Player on the edge of the map"));
+		return (ft_error("Player on the edge of the map\n"), false);
 
 	return (true);
 }
@@ -96,7 +96,7 @@ static bool	validate_tile(t_map *map, int *count, int y, int x)
 	char	c = map->grid[y][x];
 
 	if (!is_valid_char(c))
-		return (ft_error("Invalid character in map"));
+		return (ft_error("Invalid character in map\n"), false);
 
 	if (!validate_player_tile(map, count, y, x))
 		return (false);
@@ -104,7 +104,7 @@ static bool	validate_tile(t_map *map, int *count, int y, int x)
 	if (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (!is_surrounded_by_walls(map, y, x))
-			return (ft_error("Map is not closed around a walkable tile"));
+			return (ft_error("Map is not closed around a walkable tile\n"), false);
 	}
 
 	return (true);
@@ -137,7 +137,7 @@ bool	validate_map(t_map *map)
 	}
 
 	if (player_count != 1)
-		return (ft_error("Map must contain exactly one player"));
+		return (ft_error("Map must contain exactly one player\n"), false);
 
 	return (true);
 }
