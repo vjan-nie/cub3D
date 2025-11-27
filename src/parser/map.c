@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 13:04:41 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/27 13:10:15 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ static char	*accumulate_gnl(int fd, char *joined)
 	char	*tmp;
 
 	line = get_next_line(fd);
-	while (!line)
+	while (line != NULL)
 	{
 		tmp = ft_strjoin(joined, line);
 		free(line);
+		line = get_next_line(fd);
 		if (!tmp)
 			return (free(joined), NULL);
 		free(joined);
 		joined = tmp;
-		line = get_next_line(fd);
 	}
 	return (joined);
 }
