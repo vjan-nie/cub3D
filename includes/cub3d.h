@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 11:23:03 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/27 15:48:54 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ bool	check_extension(const char *path);
 
 bool	parse_map(t_map *map, char **lines);
 bool	parse_config(t_map *map, char **lines);
-bool	parse_texture(t_map *map, const char *line);
-bool	parse_color(t_map *map, const char *line);
-int		parse_rgb(const char *str);
 
 /* ************************************************************************** */
 /* Player */
