@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 02:31:04 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/27 11:23:03 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ bool	is_color_line(const char *line);
 int		get_max_line_length(char **grid);
 void	normalize_map(t_map *map);
 void	ft_free_array(char **array);
+bool	check_extension(const char *path);
 
 /* ************************************************************************** */
 /* Parser */

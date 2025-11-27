@@ -6,11 +6,11 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 09:15:48 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/27 11:27:26 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 /*
 ** read_file_lines:
@@ -34,6 +34,8 @@ static char	**read_file_lines(const char *path)
 	char	*joined;
 	char	**lines;
 
+	if (!check_extension(path))
+		return (NULL);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
