@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:31:50 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:23:05 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/28 10:32:37 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,29 @@ static char	*pad_line(char *src, int width)
 */
 void	normalize_map(t_map *map)
 {
+	int	x;
 	int	y;
 	int	max;
 
-	y = 0;
 	max = get_max_line_length(map->grid);
 	map->width = max;
+	y = 0;
 	while (map->grid[y])
 	{
 		map->grid[y] = pad_line(map->grid[y], max);
+		y++;
+	}
+	// Convertir todos los ' ' → '0'
+	y = 0;
+	while (map->grid[y])
+	{
+		x = 0;
+		while (map->grid[y][x])
+		{
+			if (map->grid[y][x] == ' ')
+				map->grid[y][x] = '0';
+			x++;
+		}
 		y++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:05:52 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 09:18:05 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 10:47:34 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@
 ** Verifica si un carácter del mapa es válido:
 ** - '0': suelo donde el jugador puede caminar
 ** - '1': pared
-** - ' ': espacio vacío (fuera del mapa)
+** - ' ': espacio vacío
 ** - 'N', 'S', 'E', 'W': posición inicial del jugador y dirección
 */
-static bool	is_valid_char(char c)
+static bool is_valid_char(char c)
 {
-	if (c == '0' || c == '1' || c == ' ')
-		return (true);
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (true);
-	return (false);
+	return (c == '0' || c == '1' || c == ' '
+		 || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
+
 
 /*
 ** validate_player_tile:
@@ -55,33 +53,32 @@ static bool	validate_player_tile(t_map *map, int *count, int y, int x)
 	return (true);
 }
 
-/*
-** is_surrounded_by_walls:
-** Verifica que una celda "caminable" (0 o jugador) esté
-** completamente rodeada por paredes o por otras celdas válidas.
-** Evita que el jugador o los espacios caminables queden expuestos.
-*/
+
 static bool	is_surrounded_by_walls(t_map *map, int y, int x)
 {
-	if (map->grid[y][x] == ' ')
-		return (false);
+	// 1. Si es pared, no hay nada que comprobar.
+	if (map->grid[y][x] == '1')
+		return true;
 
-	// Comprobamos vecinos (arriba, abajo, izquierda, derecha)
-	if (y - 1 < 0 || y + 1 >= map->height)
-		return (false);
-	if (x - 1 < 0 || x + 1 >= map->width)
-		return (false);
+	// 2. Comprobaciones de límites (no debe estar en el borde)
+	if (y == 0 || y == map->height - 1)
+		return false;
+	if (x == 0 || x == map->width - 1)
+		return false;
 
-	if (map->grid[y - 1][x] == ' ')
-		return (false);
-	if (map->grid[y + 1][x] == ' ')
-		return (false);
-	if (map->grid[y][x - 1] == ' ')
-		return (false);
-	if (map->grid[y][x + 1] == ' ')
-		return (false);
+	// 3. Vecinos: deben existir y no ser fuera del mapa
+	if (map->grid[y - 1][x] == '\0')
+		return false;
+	if (map->grid[y + 1][x] == '\0')
+		return false;
+	if (map->grid[y][x - 1] == '\0')
+		return false;
+	if (map->grid[y][x + 1] == '\0')
+		return false;
 
-	return (true);
+	// Si llegamos aquí, el tile está cerrado por algo:
+	// 1 o 0 o jugador, y es válido.
+	return true;
 }
 
 /*

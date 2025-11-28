@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 02:31:04 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 11:11:26 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ bool	parse_config(t_map *map, char **lines);
 bool	parse_texture(t_map *map, const char *line);
 bool	parse_color(t_map *map, const char *line);
 int		parse_rgb(const char *str);
+int		skip_config(char **lines);
 
 /* ************************************************************************** */
 /* Player */
