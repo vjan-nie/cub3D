@@ -3,14 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 09:15:48 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 13:51:38 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/*
+** check_map_block:
+** Comprueba que no haya líneas vacías dentro del bloque del mapa.
+** Considera válidos los espacios dentro del mapa.
+*/
+static bool	check_map_block(const char *joined, int start)
+{
+	int		i;
+	int		line_start;
+	int		j;
+	bool	has_tile;
+
+	i = start;
+	line_start = start;
+	while (joined[i])
+	{
+		if (joined[i] == '\n' || joined[i + 1] == '\0')
+		{
+			has_tile = false;
+			j = line_start;
+			while (j <= i)
+			{
+				if (joined[j] == '1' || joined[j] == '0' || joined[j] == 'N' || joined[j] == 'S' ||
+					joined[j] == 'E' || joined[j] == 'W')
+					has_tile = (true);
+				j++;
+			}
+			if (!has_tile)
+				return (ft_error("Map contains empty lines inside, stop reading\n"), false);
+			line_start = i + 1;
+		}
+		i++;
+	}
+	return (true);
+}
+
+/*
+** find_map_start:
+** Devuelve el índice donde aparece el primer carácter de mapa ('1','0','N','S','E','W')
+** dentro de una línea no vacía y que no sea de configuración.
+*/
+static bool	in_map(const char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '1' || line[i] == '0' ||
+			line[i] == 'N' || line[i] == 'S' ||
+			line[i] == 'E' || line[i] == 'W')
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 /*
 ** read_file_lines:
@@ -33,23 +90,28 @@ static char	**read_file_lines(const char *path)
 	char	*line;
 	char	*joined;
 	char	**lines;
+	char	*tmp;
+	int		map_start;
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (NULL);
-
 	joined = ft_strdup("");
+	map_start = -1;
 	while ((line = get_next_line(fd)))
 	{
-		char *tmp = joined;
-		joined = ft_strjoin(joined, line);  // concatenamos
+		if (map_start == -1 && !is_texture_line(line)
+			&& !is_color_line(line) && !is_line_empty(line))
+				if (in_map(line))
+					map_start = ft_strlen(joined);
+		tmp = joined;
+		joined = ft_strjoin(joined, line);
 		free(tmp);
-        // importan los frees: gnl aloca cada línea
 		free(line);
 	}
 	close(fd);
-
-	// convertimos el texto completo en array de líneas
+	if (map_start >= 0 && !check_map_block(joined, map_start))
+		return (free(joined), NULL);
 	lines = ft_split(joined, '\n');
 	free(joined);
 	return (lines);
@@ -76,7 +138,7 @@ bool	load_and_validate_map(t_map *map, const char *path)
 
 	file_lines = read_file_lines(path);
 	if (!file_lines)
-		return (ft_error("Failed to read .cub file\n"), false);
+		return (ft_error("Map read error\n"), false);
 
 	if (!parse_config(map, file_lines))
 		return (ft_free_array(file_lines), false);

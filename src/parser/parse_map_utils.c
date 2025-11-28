@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 09:17:01 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 12:38:44 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/*
+** skip_config:
+** Avanza por las líneas del archivo .cub mientras sean:
+** - líneas de textura (NO, SO, WE, EA)
+** - líneas de color (F, C)
+** - líneas vacías
+**
+** Devuelve el índice de la primera línea que ya no es configuración,
+** es decir, donde comienza el mapa.
+*/
+int	skip_config(char **lines)
+{
+	int	i;
+
+	i = 0;
+	while (lines[i])
+	{
+		if (is_texture_line(lines[i])
+			|| is_color_line(lines[i])
+			|| is_line_empty(lines[i]))
+			i++;
+		else
+			return (i);
+	}
+	return (i);
+}
 
 /*
 ** parse_rgb:
