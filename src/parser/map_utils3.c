@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:19:06 by sergio-jime       #+#    #+#             */
-/*   Updated: 2025/11/27 13:15:03 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:58:56 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,38 @@ bool	check_extension(const char *path)
 	if (ft_strnstr(path + (len - 4), ".cub", 4) == NULL)
 		return (false);
 	return (true);
+}
+
+/*
+** skip_config:
+** Avanza por las líneas del archivo .cub mientras sean:
+** - líneas de textura (NO, SO, WE, EA)
+** - líneas de color (F, C)
+** - líneas vacías
+**
+** Devuelve el índice de la primera línea que ya no es configuración,
+** es decir, donde comienza el mapa.
+*/
+int	skip_config(char **lines)
+{
+	int	i;
+
+	i = 0;
+	while (lines[i])
+	{
+		if (is_texture_line(lines[i])
+			|| is_color_line(lines[i])
+			|| is_line_empty(lines[i]))
+			i++;
+		else
+			return (i);
+	}
+	return (i);
+}
+
+bool	is_valid_char(char c)
+{
+	if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (true);
+	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/28 18:10:22 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:57:09 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ static bool	check_map_block(const char *joined, int start)
 			j = line_start;
 			while (j <= i)
 			{
-				if (joined[j] == '1' || joined[j] == '0' || joined[j] == 'N' || joined[j] == 'S' ||
-					joined[j] == 'E' || joined[j] == 'W')
+				if (is_valid_char(joined[j]))
 					has_tile = (true);
 				j++;
 			}
@@ -56,7 +55,8 @@ static bool	check_map_block(const char *joined, int start)
 
 /*
 ** find_map_start:
-** Devuelve el índice donde aparece el primer carácter de mapa ('1','0','N','S','E','W')
+** Devuelve el índice donde aparece el primer carácter de mapa
+('1','0','N','S','E','W')
 ** dentro de una línea no vacía y que no sea de configuración.
 */
 static bool	in_map(const char *line)
@@ -66,43 +66,35 @@ static bool	in_map(const char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '1' || line[i] == '0' ||
-			line[i] == 'N' || line[i] == 'S' ||
-			line[i] == 'E' || line[i] == 'W')
+		if (is_valid_char(line[i]))
 			return (true);
 		i++;
 	}
 	return (false);
 }
 
-/**
- * @brief Reads the file descriptor line by line and concatenates all content
- * into a single string.
- * Uses `get_next_line` (gnl) to read and append each line to the
- * `joined` string.
- * It ensures proper memory management by freeing the temporary `line` and the
- * old `joined` string in each iteration.
- * @param fd The open file descriptor of the .cub file.
- * @param joined The initial allocated string to accumulate the content.
- * @return char* The resulting single string containing the entire file content,
- * or NULL on memory allocation failure.
- */
-static char	*accumulate_gnl(int fd, char *joined)
+static	char	*accumulate_gnl(int fd, char *joined)
 {
+	int		map_start;
 	char	*line;
 	char	*tmp;
 
+	map_start = -1;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		tmp = ft_strjoin(joined, line);
+		if (map_start == -1 && !is_texture_line(line)
+			&& !is_color_line(line) && !is_line_empty(line))
+			if (in_map(line))
+				map_start = ft_strlen(joined);
+		tmp = joined;
+		joined = ft_strjoin(joined, line);
+		free(tmp);
 		free(line);
 		line = get_next_line(fd);
-		if (!tmp)
-			return (free(joined), NULL);
-		free(joined);
-		joined = tmp;
 	}
+	if (map_start >= 0 && !check_map_block(joined, map_start))
+		return (free(joined), NULL);
 	return (joined);
 }
 
@@ -127,11 +119,8 @@ static char	*accumulate_gnl(int fd, char *joined)
 static char	**read_file_lines(const char *path)
 {
 	int		fd;
-	char	**lines;
 	char	*joined;
 	char	**lines;
-	char	*tmp;
-	int		map_start;
 
 	if (!check_extension(path))
 		return (ft_error("Invalid file extension\n"), NULL);
@@ -139,21 +128,8 @@ static char	**read_file_lines(const char *path)
 	if (fd < 0)
 		return (ft_error("Cannot open file\n"), NULL);
 	joined = ft_strdup("");
-	map_start = -1;
-	while ((line = get_next_line(fd)))
-	{
-		if (map_start == -1 && !is_texture_line(line)
-			&& !is_color_line(line) && !is_line_empty(line))
-				if (in_map(line))
-					map_start = ft_strlen(joined);
-		tmp = joined;
-		joined = ft_strjoin(joined, line);
-		free(tmp);
-		free(line);
-	}
+	joined = accumulate_gnl(fd, joined);
 	close(fd);
-	if (map_start >= 0 && !check_map_block(joined, map_start))
-		return (free(joined), NULL);
 	lines = ft_split(joined, '\n');
 	free(joined);
 	if (!lines)
@@ -186,7 +162,6 @@ bool	load_and_validate_map(t_map *map, const char *path)
 	file_lines = read_file_lines(path);
 	if (!file_lines)
 		return (ft_error("Map read error\n"), false);
-
 	if (!parse_config(map, file_lines))
 		return (ft_free_array(file_lines), false);
 	if (!parse_map(map, file_lines))
