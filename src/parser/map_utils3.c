@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:19:06 by sergio-jime       #+#    #+#             */
-/*   Updated: 2025/11/28 18:58:56 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 19:00:52 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,4 @@ int	skip_config(char **lines)
 			return (i);
 	}
 	return (i);
-}
-
-bool	is_valid_char(char c)
-{
-	if (c == '1' || c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (true);
-	return (false);
 }
