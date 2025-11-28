@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/28 11:11:26 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/28 18:53:10 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ bool	is_color_line(const char *line);
 int		get_max_line_length(char **grid);
 void	normalize_map(t_map *map);
 void	ft_free_array(char **array);
+bool	check_extension(const char *path);
 
 /* ************************************************************************** */
 /* Parser */
 
 bool	parse_map(t_map *map, char **lines);
 bool	parse_config(t_map *map, char **lines);
-bool	parse_texture(t_map *map, const char *line);
-bool	parse_color(t_map *map, const char *line);
-int		parse_rgb(const char *str);
+int		free_partial_grid(t_map *map, int filled);
 int		skip_config(char **lines);
+bool	is_valid_char(char c);
 
 /* ************************************************************************** */
 /* Player */

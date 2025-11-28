@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 17:03:18 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:28:30 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:13:05 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,18 @@ void	ft_free_array(char **array)
 		i++;
 	}
 	free(array);
+}
+
+int	free_partial_grid(t_map *map, int filled)
+{
+	int	i;
+
+	i = 0;
+	while (i < filled)
+	{
+		free(map->grid[i]);
+		i++;
+	}
+	free(map->grid);
+	return (0);
 }

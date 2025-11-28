@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:05:52 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/28 10:47:34 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/28 19:01:13 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** - ' ': espacio vacío
 ** - 'N', 'S', 'E', 'W': posición inicial del jugador y dirección
 */
-static bool is_valid_char(char c)
+bool	is_valid_char(char c)
 {
 	return (c == '0' || c == '1' || c == ' '
 		 || c == 'N' || c == 'S' || c == 'E' || c == 'W');

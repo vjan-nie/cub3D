@@ -6,7 +6,7 @@
 #    By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 12:24:16 by vjan-nie          #+#    #+#              #
-#    Updated: 2025/11/27 01:23:32 by sergio-jime      ###   ########.fr        #
+#    Updated: 2025/11/27 11:21:37 by sergio-jime      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC				=	$(SRC_DIR)/$(CORE_DIR)/cub3d.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map_utils.c\
 					$(SRC_DIR)/$(PARSER_DIR)/map_utils2.c\
+					$(SRC_DIR)/$(PARSER_DIR)/map_utils3.c\
 					$(SRC_DIR)/$(PARSER_DIR)/normalize_map.c\
 					$(SRC_DIR)/$(PARSER_DIR)/parse_map.c\
 					$(SRC_DIR)/$(PARSER_DIR)/parse_map_utils.c\

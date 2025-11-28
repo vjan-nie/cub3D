@@ -3,24 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:51:42 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:21:00 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:58:21 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/**
+ * @file map_utils2.c
+ * @brief Collection of utility functions for querying line properties and map
+ * dimensions during parsing.
+ * These functions help classify configuration lines and determine the required
+ * size for the map grid normalization.
+ */
 #include "cub3d.h"
 
-/*
-** get_max_line_length:
-** Recorre todas las líneas del mapa y devuelve la longitud
-** de la más larga.
-**
-** ¿Para qué sirve esto?
-** Para poder "normalizar" el mapa después, rellenando
-** las líneas más cortas con espacios y hacer un mapa rectangular.
-*/
+/**
+ * @brief Calculates the length of the longest string within a 2D array
+ * of strings.
+ * This maximum length is used later to "normalize" the map, ensuring all rows
+ * in the final grid have the same length (rectangular shape) by padding shorter
+ * lines with spaces.
+ * @param grid The 2D array of strings (the map grid or a subset thereof).
+ * @return int The length of the longest string found in the array.
+ */
 int	get_max_line_length(char **grid)
 {
 	int	max;
@@ -29,6 +36,8 @@ int	get_max_line_length(char **grid)
 
 	max = 0;
 	i = 0;
+	if (!grid)
+		return (0);
 	while (grid[i])
 	{
 		len = ft_strlen(grid[i]);
@@ -39,15 +48,15 @@ int	get_max_line_length(char **grid)
 	return (max);
 }
 
-/*
-** is_line_empty:
-** Devuelve true si la línea está vacía o solo contiene
-** espacios / tabs.
-**
-** Esto es útil para:
-** - saltar líneas vacías al parsear configuración
-** - detectar si hay huecos sospechosos dentro del mapa
-*/
+/**
+ * @brief Checks if a given line is effectively empty.
+ * A line is considered empty if it is NULL, or if it consists solely of
+ * space characters (' ') or tab characters ('\t'). This is vital for ignoring
+ * gaps in the configuration section of the `.cub` file.
+ * @param line The string (line) to check.
+ * @return bool True if the line is empty or contains only whitespace,
+ * false otherwise.
+ */
 bool	is_line_empty(const char *line)
 {
 	int	i;
@@ -62,21 +71,20 @@ bool	is_line_empty(const char *line)
 	return (true);
 }
 
-/*
-** is_texture_line:
-** Detecta si una línea de configuración es una textura:
-**   NO ./north.xpm
-**   SO ./south.xpm
-**   WE ./west.xpm
-**   EA ./east.xpm
-**
-** No comprueba el path, solo la "etiqueta".
-*/
+/**
+ * @brief Identifies if a line starts with one of the four required texture
+ * identifiers.
+ * Checks specifically for "NO ", "SO ", "WE ", or "EA " at the beginning
+ * of the line.
+ * It only validates the identifier, not the path itself.
+ * @param line The string (line) to check.
+ * @return bool True if the line matches a texture identifier followed by a
+ * space, false otherwise.
+ */
 bool	is_texture_line(const char *line)
 {
 	if (!line)
 		return (false);
-
 	if (!ft_strncmp(line, "NO ", 3))
 		return (true);
 	if (!ft_strncmp(line, "SO ", 3))
@@ -85,28 +93,25 @@ bool	is_texture_line(const char *line)
 		return (true);
 	if (!ft_strncmp(line, "EA ", 3))
 		return (true);
-
 	return (false);
 }
 
-/*
-** is_color_line:
-** Detecta si la línea describe un color:
-**   F 220,100,0
-**   C 225,30,0
-**
-** Igual que con las texturas: solo reconoce la etiqueta.
-*/
+/**
+ * @brief Identifies if a line starts with a floor ('F') or ceiling ('C')
+ * color identifier.
+ * Checks specifically for "F " or "C " at the beginning of the line.
+ * It only validates the identifier, not the RGB format that follows.
+ * @param line The string (line) to check.
+ * @return bool True if the line matches a color identifier followed by a
+ * space, false otherwise.
+ */
 bool	is_color_line(const char *line)
 {
 	if (!line)
 		return (false);
-
 	if (!ft_strncmp(line, "F ", 2))
 		return (true);
 	if (!ft_strncmp(line, "C ", 2))
 		return (true);
-
 	return (false);
 }
-
