@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:47:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 13:10:15 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:10:22 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,63 @@
  * configuration extraction, map data extraction, normalization, and validation.
  */
 #include "../includes/cub3d.h"
+
+/*
+** check_map_block:
+** Comprueba que no haya líneas vacías dentro del bloque del mapa.
+** Considera válidos los espacios dentro del mapa.
+*/
+static bool	check_map_block(const char *joined, int start)
+{
+	int		i;
+	int		line_start;
+	int		j;
+	bool	has_tile;
+
+	i = start;
+	line_start = start;
+	while (joined[i])
+	{
+		if (joined[i] == '\n' || joined[i + 1] == '\0')
+		{
+			has_tile = false;
+			j = line_start;
+			while (j <= i)
+			{
+				if (joined[j] == '1' || joined[j] == '0' || joined[j] == 'N' || joined[j] == 'S' ||
+					joined[j] == 'E' || joined[j] == 'W')
+					has_tile = (true);
+				j++;
+			}
+			if (!has_tile)
+				return (ft_error("Map contains empty lines inside, stop reading\n"), false);
+			line_start = i + 1;
+		}
+		i++;
+	}
+	return (true);
+}
+
+/*
+** find_map_start:
+** Devuelve el índice donde aparece el primer carácter de mapa ('1','0','N','S','E','W')
+** dentro de una línea no vacía y que no sea de configuración.
+*/
+static bool	in_map(const char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '1' || line[i] == '0' ||
+			line[i] == 'N' || line[i] == 'S' ||
+			line[i] == 'E' || line[i] == 'W')
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 /**
  * @brief Reads the file descriptor line by line and concatenates all content
@@ -72,6 +129,9 @@ static char	**read_file_lines(const char *path)
 	int		fd;
 	char	**lines;
 	char	*joined;
+	char	**lines;
+	char	*tmp;
+	int		map_start;
 
 	if (!check_extension(path))
 		return (ft_error("Invalid file extension\n"), NULL);
@@ -79,14 +139,21 @@ static char	**read_file_lines(const char *path)
 	if (fd < 0)
 		return (ft_error("Cannot open file\n"), NULL);
 	joined = ft_strdup("");
-	if (!joined)
-		return (close(fd), ft_error("Malloc error\n"), NULL);
-	joined = accumulate_gnl(fd, joined);
-	if (!joined)
-		return (close(fd), ft_error("GNL error\n"), NULL);
+	map_start = -1;
+	while ((line = get_next_line(fd)))
+	{
+		if (map_start == -1 && !is_texture_line(line)
+			&& !is_color_line(line) && !is_line_empty(line))
+				if (in_map(line))
+					map_start = ft_strlen(joined);
+		tmp = joined;
+		joined = ft_strjoin(joined, line);
+		free(tmp);
+		free(line);
+	}
 	close(fd);
-	if (joined[0] == '\0')
-		return (free(joined), ft_error("File is empty\n"), NULL);
+	if (map_start >= 0 && !check_map_block(joined, map_start))
+		return (free(joined), NULL);
 	lines = ft_split(joined, '\n');
 	free(joined);
 	if (!lines)
@@ -118,7 +185,8 @@ bool	load_and_validate_map(t_map *map, const char *path)
 
 	file_lines = read_file_lines(path);
 	if (!file_lines)
-		return (false);
+		return (ft_error("Map read error\n"), false);
+
 	if (!parse_config(map, file_lines))
 		return (ft_free_array(file_lines), false);
 	if (!parse_map(map, file_lines))

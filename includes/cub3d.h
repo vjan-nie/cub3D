@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 17:13:41 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:06:01 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ bool	check_extension(const char *path);
 bool	parse_map(t_map *map, char **lines);
 bool	parse_config(t_map *map, char **lines);
 int		free_partial_grid(t_map *map, int filled);
+int		skip_config(char **lines);
 
 /* ************************************************************************** */
 /* Player */

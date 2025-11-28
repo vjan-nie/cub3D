@@ -6,38 +6,11 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:58:26 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 19:05:06 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:13:34 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/*
-** skip_config:
-** Avanza por las líneas del archivo .cub mientras sean:
-** - líneas de textura (NO, SO, WE, EA)
-** - líneas de color (F, C)
-** - líneas vacías
-**
-** Devuelve el índice de la primera línea que ya no es configuración,
-** es decir, donde comienza el mapa.
-*/
-static int	skip_config(char **lines)
-{
-	int	i;
-
-	i = 0;
-	while (lines[i])
-	{
-		if (is_texture_line(lines[i])
-			|| is_color_line(lines[i])
-			|| is_line_empty(lines[i]))
-			i++;
-		else
-			return (i);
-	}
-	return (i);
-}
 
 /*
 ** count_map_lines:

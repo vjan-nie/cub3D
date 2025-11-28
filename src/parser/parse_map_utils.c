@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 15:43:52 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/28 18:12:35 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,33 @@
  * entries (colors and textures).
  */
 #include "cub3d.h"
+
+/*
+** skip_config:
+** Avanza por las líneas del archivo .cub mientras sean:
+** - líneas de textura (NO, SO, WE, EA)
+** - líneas de color (F, C)
+** - líneas vacías
+**
+** Devuelve el índice de la primera línea que ya no es configuración,
+** es decir, donde comienza el mapa.
+*/
+int	skip_config(char **lines)
+{
+	int	i;
+
+	i = 0;
+	while (lines[i])
+	{
+		if (is_texture_line(lines[i])
+			|| is_color_line(lines[i])
+			|| is_line_empty(lines[i]))
+			i++;
+		else
+			return (i);
+	}
+	return (i);
+}
 
 /**
  * @brief Converts an "R,G,B" string representation into a single 32-bit integer
@@ -33,7 +60,7 @@
  * 5. Validates that each R, G, B value is within the [0, 255] range.
  * 6. Combines the values using bitwise shifts: `(r << 16) | (g << 8) | b`.
  */
-static int	parse_rgb(const char *str)
+int	parse_rgb(const char *str)
 {
 	char	**p;
 	int		r;
