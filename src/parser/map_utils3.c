@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:19:06 by sergio-jime       #+#    #+#             */
-/*   Updated: 2025/11/28 19:00:52 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/11/29 17:42:31 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,19 @@ bool	check_extension(const char *path)
 	return (true);
 }
 
-/*
-** skip_config:
-** Avanza por las líneas del archivo .cub mientras sean:
-** - líneas de textura (NO, SO, WE, EA)
-** - líneas de color (F, C)
-** - líneas vacías
-**
-** Devuelve el índice de la primera línea que ya no es configuración,
-** es decir, donde comienza el mapa.
-*/
+/**
+ * @brief Finds the starting line index of the map grid within the file
+ * lines array.
+ * Iterates through the lines array, skipping lines that are:
+ * - Valid texture configurations (NO, SO, WE, EA).
+ * - Valid color configurations (F, C).
+ * - Empty/whitespace-only lines.
+ * @param lines The array of strings read from the .cub file.
+ * @return int The index of the first line that is neither a configuration
+ * nor empty.
+ * This index is presumed to be the start of the map block. If no such line
+ * is found, it returns the length of the array.
+ */
 int	skip_config(char **lines)
 {
 	int	i;
@@ -68,4 +71,29 @@ int	skip_config(char **lines)
 			return (i);
 	}
 	return (i);
+}
+
+/**
+ * @brief Checks if a line contains any valid map tile characters.
+ * Used during file reading to determine when the configuration block ends and
+ * the map block begins, or to enforce the rule that lines inside the map
+ * block must contain map data.
+ * @param line The string (line) to check.
+ * @return bool True if the line contains at least one character classified as
+ * a valid map tile, false otherwise.
+ * @note Relies on the external utility `is_valid_char` to classify
+ * map characters.
+ */
+bool	in_map(const char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (is_valid_char(line[i]))
+			return (true);
+		i++;
+	}
+	return (false);
 }
