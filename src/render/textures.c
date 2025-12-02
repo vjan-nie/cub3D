@@ -3,48 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 18:01:08 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 09:18:40 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/02 13:41:06 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// Carga una sola textura desde un archivo XPM
-// cub: estructura principal del juego
-// tex: estructura donde se guardará la textura
-// path: ruta del archivo XPM
-// Devuelve true si se carga correctamente, false si hay error
+/**
+ * @brief Loads one texture from an .xpm file using
+ * MLX's image loader. Updates data on t_img structure,
+ * which is the frame buffer.
+ */
 static bool	load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 {
-	// Punteros y tamaños de la imagen
 	int	width;
 	int	height;
 
 	width = 0;
 	height = 0;
-
-	// Cargar la imagen XPM en memoria usando MiniLibX
 	tex->img_ptr = mlx_xpm_file_to_image(cub->mlx, path, &width, &height);
 	if (!tex->img_ptr)
-		return (ft_error("Failed to load XPM texture\n"), false); // Error si no se carga
-
+		return (ft_error("Failed to load XPM texture\n"), false);
 	tex->width = width;
 	tex->height = height;
-
-	// Obtener puntero a los datos de la imagen para acceder píxel por píxel
 	tex->data = mlx_get_data_addr(tex->img_ptr,
 			&tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->data)
-		return (ft_error("Failed to get texture data\n"), false); // Error si falla
-
-	return (true); // Textura cargada correctamente
+		return (ft_error("Failed to get texture data\n"), false);
+	return (true);
 }
 
-// Verifica que las rutas de las 4 texturas (N, S, E, W) estén presentes en el mapa
-// Devuelve true si todas están presentes, false si falta alguna
+/**
+ * @brief Checks if there is a valid path to find the wall textures.
+ */
 static bool	check_paths(t_map *map)
 {
 	int	i;
@@ -53,30 +47,27 @@ static bool	check_paths(t_map *map)
 	while (i < 4)
 	{
 		if (!map->tex_paths[i])
-			return (ft_error("Missing texture path\n"), false); // Faltan rutas
+			return (ft_error("Missing texture path\n"), false);
 		i++;
 	}
-	return (true); // Todas las rutas existen
+	return (true);
 }
 
-// Carga todas las texturas del juego (N, S, E, W)
-// Primero verifica que las rutas estén definidas y luego carga cada textura
-// Devuelve true si todo se cargó correctamente
+/**
+ * @brief Loads wall textures from the given map file paths.
+ */
 bool	load_textures(t_cub3d *cub)
 {
 	int	i;
 
-	// Verificar rutas antes de cargar
 	if (!check_paths(&cub->map))
 		return (false);
-
-	// Cargar cada textura
 	i = 0;
 	while (i < 4)
 	{
 		if (!load_one_texture(cub, &cub->textures[i], cub->map.tex_paths[i]))
-			return (false); // Error si falla alguna textura
+			return (false);
 		i++;
 	}
-	return (true); // Todas las texturas cargadas correctamente
+	return (true);
 }

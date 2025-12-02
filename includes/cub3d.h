@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/29 17:04:45 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/02 14:25:38 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define TILE_SIZE 64
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
+# define MOVEMENT_SPEED 0.05
+# define ROTATION_SPEED 0.05
+# define FOV_ANGLE 0.66
 
 /* ************************************************************************** */
 /* Main Utils */

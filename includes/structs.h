@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:31:48 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/26 23:32:36 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/02 14:16:15 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ typedef struct	s_player
 	double	dir_y;
 	double	plane_x;		// Vector plano de cámara (perpendicular a dir)
 	double	plane_y;
-	double	move_speed;		// Velocidad de movimiento
-	double	rot_speed;		// Velocidad de rotación
+	double	move_speed;		// Velocidad de movimiento 
+	double	rot_speed;		// Velocidad de rotación (ángulo de rotación por frame, en radianes!)
 }			t_player;
 
 /* IMAGE: Se "dibuja" la imagen en buffer antes de cargarla de golpe y terminada
