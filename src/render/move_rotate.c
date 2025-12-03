@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:01:22 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/02 14:12:33 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:25:22 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
  */
 static void	rotate_dir_plane(t_player *p, double rot)
 {
-	double	old_dir_x = p->dir_x;
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = p->dir_x;
 	p->dir_x = p->dir_x * cos(rot) - p->dir_y * sin(rot);
 	p->dir_y = old_dir_x * sin(rot) + p->dir_y * cos(rot);
-	double old_plane_x = p->plane_x;
+	old_plane_x = p->plane_x;
 	p->plane_x = p->plane_x * cos(rot) - p->plane_y * sin(rot);
 	p->plane_y = old_plane_x * sin(rot) + p->plane_y * cos(rot);
 }

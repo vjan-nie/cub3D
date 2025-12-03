@@ -6,16 +6,18 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:46:20 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/03 10:44:34 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:21:54 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief Gets the player initial position and direction (N, S, E, or W) in the map.
- * @note Adds 0.5 to each coordinate to keep the initial position in the center of the tile.
- * This keeps the initial position from starting in the exact corner of the tile, 
+ * @brief Gets the player initial position and direction 
+ * (N, S, E, or W) in the map.
+ * @note Adds 0.5 to each coordinate to keep the initial 
+ * position in the center of the tile. This keeps the initial 
+ * position from starting in the exact corner of the tile, 
  * triggering instant colision.
  */
 static char	get_player_dir(t_map *map, t_player *p)
@@ -42,7 +44,6 @@ static void	set_values(t_player *p, double dx, double dy, double px, double py)
 	p->plane_x = px;
 	p->plane_y = py;
 }
-
 
 /**
  * @brief Sets player direction and camera plane accordingly to the 

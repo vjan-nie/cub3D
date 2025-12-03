@@ -6,16 +6,19 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:04:04 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/03 10:52:57 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:22:59 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief Checks for accumulated keybord input related to the movement in every loop.
- * If any of the key codes realted to movement have been pressed (with the value 'true'),
- * we initiate the attempt to update the position and direction.
+ * @brief Checks for accumulated keybord input 
+ * related to the movement in every loop.
+ * If any of the key codes realted to movement 
+ * have been pressed (with the value 'true'),
+ * we initiate the attempt to update the position 
+ * and direction.
  */
 void	update_player(t_cub3d *cub)
 {

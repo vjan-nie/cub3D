@@ -1,0 +1,64 @@
+# ============================
+#   MinilibX Linux suppressions
+# ============================
+
+# valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind.supp
+
+# OJO! Syscall param writev(vector[0]) points to uninitialised byte(s)
+# Se trata de uso de memoria no inicializada dentro de X11 / libxcb, provocado indirectamente por la minilibx
+# X11 usa buffers internos que no siempre inicializa antes de escribirlos por writev(), y Valgrind lo detecta como “uninitialised byte(s)
+
+# ---- X11: leaks internas del display ----
+{
+   X11-Display-Leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_XlcDefaultLoader
+   fun:_XlcCreateLC
+   fun:XOpenDisplay
+}
+
+{
+   X11-XOpenDisplay-reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:XOpenDisplay
+}
+
+# ---- X11: recursos de imágenes ----
+{
+   X11-XCreateImage
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:XCreateImage
+}
+
+# ---- Xext: librería usada internamente por minilibx ----
+{
+   Xext-AddDisplay
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:XextAddDisplay
+}
+
+# ---- mlx_init() leaks internas ----
+{
+   MLX-Init-reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:mlx_init
+}
+
+# ---- mlx_new_window() leaks internas ----
+{
+   MLX-NewWindow-reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:mlx_new_window
+}
