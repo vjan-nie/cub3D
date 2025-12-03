@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:31:48 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/02 14:16:15 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:00:13 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ En MLX (MiniLibX):
 (orden de bytes: BGRA)
 1 → big endian
 (orden de bytes: ARGB)
-Normalmente en Linux casi siempre tendrás 0, es decir, little endian. */
+Normalmente en Linux casi siempre tendrás 0, es decir, little endian. La herramiente de MLX pide endian*/
 
 /**
  * @struct s_img

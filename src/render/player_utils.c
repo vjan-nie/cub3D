@@ -6,44 +6,50 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:04:04 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/19 10:39:58 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:52:57 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// Actualiza la posición y orientación del jugador según las teclas presionadas
-// Se llama normalmente en cada frame del juego
+/**
+ * @brief Checks for accumulated keybord input related to the movement in every loop.
+ * If any of the key codes realted to movement have been pressed (with the value 'true'),
+ * we initiate the attempt to update the position and direction.
+ */
 void	update_player(t_cub3d *cub)
 {
-	if (cub->key_code.w)       // Tecla W: mover hacia adelante
+	if (cub->key_code.w)
 		move_forward(cub);
-	if (cub->key_code.s)       // Tecla S: mover hacia atrás
+	if (cub->key_code.s)
 		move_backward(cub);
-	if (cub->key_code.a)       // Tecla A: moverse a la izquierda (strafe)
+	if (cub->key_code.a)
 		move_left(cub);
-	if (cub->key_code.d)       // Tecla D: moverse a la derecha (strafe)
+	if (cub->key_code.d)
 		move_right(cub);
-	if (cub->key_code.left)    // Flecha izquierda: rotar a la izquierda
+	if (cub->key_code.left)
 		rotate_left(cub);
-	if (cub->key_code.right)   // Flecha derecha: rotar a la derecha
+	if (cub->key_code.right)
 		rotate_right(cub);
 }
 
-// Comprueba si un carácter representa la dirección inicial de un jugador
-// Se usa para encontrar al jugador en el mapa
+/**
+ * @brief Checks for the player tile, which can only be one
+ * of the valid chars which represent the direction (N, S, E, W).
+ */
 bool	is_player_direction(char c)
 {
-	if (c == 'N' || c == 'S') // Norte o Sur
-		return (true);
-	if (c == 'E' || c == 'W') // Este u Oeste
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (true);
 	return (false);
 }
 
-// Busca la posición inicial del jugador en el mapa y devuelve la dirección encontrada
-// - px y py son punteros donde se almacenará la coordenada X e Y
-// - Retorna 'N', 'S', 'E' o 'W' si encuentra al jugador, 0 si no lo encuentra
+/**
+ * @brief Searchs for the player tile in the map, updates the values of
+ * the coordinates and returns a char which refers to the direction 
+ * that the player should be looking at the begining. Return '0' if the 
+ * player is not found.
+ */
 char	find_player_tile(t_map *map, int *px, int *py)
 {
 	int	y;
@@ -55,15 +61,15 @@ char	find_player_tile(t_map *map, int *px, int *py)
 		x = 0;
 		while (map->grid[y][x])
 		{
-			if (is_player_direction(map->grid[y][x])) // Se encontró la celda del jugador
+			if (is_player_direction(map->grid[y][x]))
 			{
-				*px = x;   // Guarda la coordenada X
-				*py = y;   // Guarda la coordenada Y
-				return (map->grid[y][x]); // Devuelve la dirección
+				*px = x;
+				*py = y;
+				return (map->grid[y][x]);
 			}
 			x++;
 		}
 		y++;
 	}
-	return (0); // No se encontró jugador
+	return (0);
 }

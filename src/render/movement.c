@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:47:14 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/02 13:51:27 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:53:10 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static bool	is_walkable(char c)
 		return (true);
 	return (false);
 }
-
 
 /**
  * @brief Checks for movement attempts accumulated by keyboard input,
