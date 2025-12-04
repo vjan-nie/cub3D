@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 10:03:31 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:52:07 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,29 +99,20 @@ static void	draw_wall_line_textured(t_cub3d *cub, t_ray *r, int x)
 	int		y;
 	int		tex_x;
 	int		tex_y;
-	int		color;
 	char	*dst;
-	int		d;
 
 	tex = select_wall_texture(cub, r);
 	tex_x = calc_wall_tex_x(cub, r, tex);
-	if (tex_x < 0)
-		tex_x = 0;
-	if (tex_x >= tex->width)
-		tex_x = tex->width - 1;
+	tex_x = clamp(tex_x, 0, tex->width -1);
 	y = r->start;
 	while (y <= r->end)
 	{
-		d = y * 256 - cub->screen_height * 128 + r->line_h * 128;
-		tex_y = (d * tex->height / r->line_h) / 256;
-		if (tex_y < 0)
-			tex_y = 0;
-		if (tex_y >= tex->height)
-			tex_y = tex->height - 1;
+		tex_y = y * 256 - cub->screen_height * 128 + r->line_h * 128;
+		tex_y = (tex_y * tex->height / r->line_h) / 256;
+		tex_y = clamp(tex_y, 0, tex->height -1);
 		dst = tex->data + (tex_y * tex->line_len + tex_x * (tex->bpp / 8));
-		color = (unsigned char)dst[2] << 16 | (unsigned char)dst[1] << 8 \
-			| (unsigned char)dst[0];
-		put_pixel(&cub->frame, x, y, color);
+		put_pixel(&cub->frame, x, y, ((unsigned char)dst[2] << 16) | \
+			((unsigned char)dst[1] << 8) | (unsigned char)dst[0]);
 		y++;
 	}
 }
