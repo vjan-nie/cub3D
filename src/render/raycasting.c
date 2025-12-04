@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 11:52:07 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:02:25 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,35 @@ static void	init_ray_vars(t_cub3d *cub, t_ray *r, int x)
 }
 
 /**
+ * @brief Security check: if the ray excedes the map's limits,
+ * consider it a hit.
+ */
+static bool	reaches_map_limit(t_cub3d *cub, t_ray *r)
+{
+	if (r->map_y < 0 || r->map_y >= cub->map.height)
+	{
+		r->hit = 1;
+		return (1);
+	}
+	if (r->map_x < 0)
+	{
+		r->hit = 1;
+		return (1);
+	}
+	if (r->map_x >= (int)ft_strlen(cub->map.grid[r->map_y]))
+	{
+		r->hit = 1;
+		return (1);
+	}
+	if (cub->map.grid[r->map_y][r->map_x] == '1')
+	{
+		r->hit = 1;
+		return (1);
+	}
+	return (0);
+}
+
+/**
 * @brief DDA algorithm iteration: rays keep moving forward
 * until they hit a wall or map limit.
 */
@@ -70,23 +99,8 @@ static void	perform_dda(t_cub3d *cub, t_ray *r)
 			r->map_y += r->step_y;
 			r->side = 1;
 		}
-		if (r->map_y < 0 || r->map_y >= cub->map.height)
-		{
-			r->hit = 1;
+		if (reaches_map_limit(cub, r))
 			break ;
-		}
-		if (r->map_x < 0)
-		{
-			r->hit = 1;
-			break ;
-		}
-		if (r->map_x >= (int)ft_strlen(cub->map.grid[r->map_y]))
-		{
-			r->hit = 1;
-			break ;
-		}
-		if (cub->map.grid[r->map_y][r->map_x] == '1')
-			r->hit = 1;
 	}
 }
 
