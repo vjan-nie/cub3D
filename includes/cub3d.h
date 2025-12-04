@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 09:51:44 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:25:19 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	raycast(t_cub3d *cub);
 void	calc_line_params(t_cub3d *cub, t_ray *r);
 void	calc_step_side(t_player *p, t_ray *r);
 void	calc_delta(t_ray *r);
+int		clamp(int value, int min, int max);
 
 /* ************************************************************************** */
 /* Textures */

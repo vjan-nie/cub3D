@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:07:23 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 10:03:02 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:32:54 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,38 @@ void	calc_delta(t_ray *r)
 		r->delta_y = fabs(1.0 / r->dir_y);
 }
 
+static void	step_side_aux_x(t_player *p, t_ray *r, bool pos)
+{
+	if (pos)
+	{
+		r->step_x = 1;
+		r->side_x = (r->map_x + 1.0 - p->x);
+	}
+	else
+	{
+		r->step_x = -1;
+		r->side_x = (p->x - r->map_x);
+	}
+	if (r->side_x < 1e-6)
+		r->side_x = 1e-6;
+}
+
+static void	step_side_aux_y(t_player *p, t_ray *r, bool pos)
+{
+	if (pos)
+	{
+		r->step_y = 1;
+		r->side_y = (r->map_y + 1.0 - p->y);
+	}
+	else
+	{
+		r->step_y = -1;
+		r->side_y = (p->y - r->map_y);
+	}
+	if (r->side_y < 1e-6)
+		r->side_y = 1e-6;
+}
+
 /**
 * @brief Calculates the distance to the next grid line, and it's direction:
 * step_x/step_y = direction in (+1 o -1)
@@ -42,34 +74,22 @@ void	calc_step_side(t_player *p, t_ray *r)
 {
 	if (r->dir_x < 0)
 	{
-		r->step_x = -1;
-		r->side_x = (p->x - r->map_x);
-		if (r->side_x < 1e-6)
-			r->side_x = 1e-6;
+		step_side_aux_x(p, r, 0);
 		r->side_x *= r->delta_x;
 	}
 	else
 	{
-		r->step_x = 1;
-		r->side_x = (r->map_x + 1.0 - p->x);
-		if (r->side_x < 1e-6)
-			r->side_x = 1e-6;
+		step_side_aux_x(p, r, 1);
 		r->side_x *= r->delta_x;
 	}
 	if (r->dir_y < 0)
 	{
-		r->step_y = -1;
-		r->side_y = (p->y - r->map_y);
-		if (r->side_y < 1e-6)
-			r->side_y = 1e-6;
+		step_side_aux_y(p, r, 0);
 		r->side_y *= r->delta_y;
 	}
 	else
 	{
-		r->step_y = 1;
-		r->side_y = (r->map_y + 1.0 - p->y);
-		if (r->side_y < 1e-6)
-			r->side_y = 1e-6;
+		step_side_aux_y(p, r, 1);
 		r->side_y *= r->delta_y;
 	}
 }
