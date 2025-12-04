@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:46:20 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/03 18:21:54 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:39:51 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ static char	get_player_dir(t_map *map, t_player *p)
 	return (dir);
 }
 
-/**
- * @brief Set values in the player structure.
- */
-static void	set_values(t_player *p, double dx, double dy, double px, double py)
+static void	set_dir(t_player *p, double dx, double dy)
 {
 	p->dir_x = dx;
 	p->dir_y = dy;
+}
+
+static void	set_plane(t_player *p, double px, double py)
+{
 	p->plane_x = px;
 	p->plane_y = py;
 }
@@ -56,13 +57,25 @@ static void	set_values(t_player *p, double dx, double dy, double px, double py)
 static void	set_dir_and_plane(t_player *p, char dir)
 {
 	if (dir == 'N')
-		set_values(p, 0, -1, FOV_ANGLE, 0);
+	{
+		set_dir(p, 0, -1);
+		set_plane(p, FOV_ANGLE, 0);
+	}
 	else if (dir == 'S')
-		set_values(p, 0, 1, -FOV_ANGLE, 0);
+	{
+		set_dir(p, 0, 1);
+		set_plane(p, -FOV_ANGLE, 0);
+	}
 	else if (dir == 'E')
-		set_values(p, 1, 0, 0, FOV_ANGLE);
+	{
+		set_dir(p, 1, 0);
+		set_plane(p, 0, FOV_ANGLE);
+	}
 	else if (dir == 'W')
-		set_values(p, -1, 0, 0, -FOV_ANGLE);
+	{
+		set_dir(p, -1, 0);
+		set_plane(p, 0, -FOV_ANGLE);
+	}
 }
 
 /**
