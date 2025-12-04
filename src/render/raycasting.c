@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 12:02:25 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:20:36 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@
 static void	init_ray_vars(t_cub3d *cub, t_ray *r, int x)
 {
 	t_player	*p;
-	double		camera_x;
+	double		ray_offset;
 
 	p = &cub->player;
-	camera_x = 2.0 * x / (double)cub->screen_width - 1.0;
-	r->dir_x = p->dir_x + p->plane_x * camera_x;
-	r->dir_y = p->dir_y + p->plane_y * camera_x;
+	ray_offset = 2.0 * x / (double)cub->screen_width - 1.0;
+	r->dir_x = p->dir_x + p->plane_x * ray_offset;
+	r->dir_y = p->dir_y + p->plane_y * ray_offset;
 	r->map_x = (int)p->x;
 	r->map_y = (int)p->y;
 	if (r->map_y < 0)
