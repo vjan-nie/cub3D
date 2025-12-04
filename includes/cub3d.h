@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/02 14:25:38 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:51:44 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,11 @@ void	calc_step_side(t_player *p, t_ray *r);
 void	calc_delta(t_ray *r);
 
 /* ************************************************************************** */
-/* Load textures */
+/* Textures */
 
 bool	load_textures(t_cub3d *cub);
+t_img	*select_wall_texture(t_cub3d *cub, t_ray *r);
+int		calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex);
 
 /* ************************************************************************** */
 /* Movement */

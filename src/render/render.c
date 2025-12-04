@@ -6,39 +6,34 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:43:45 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/03 18:19:55 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/04 09:56:57 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief dsf.
- * @param dst Destiny: pointer to the adress where the color bytes are stored, 
- * in the image framebuffer structure (specifically in img-data).
- * Calculation:
- * 
- * y * img->line_len:
- * 	Bytes needed to skip in order to reach current line.
- * 
- * x * (img->bpp / 8):
- * 	Bytes needed to skip in order to reach the current 'x' pixel.
- * 
- * img->data + (...): 
- * 	We add this current pixel position 
- * 	to the begining of the framebuffer: destiny.
- * 
- * Each color component is written byte by byte:
- * (endian: Byte order (0: little-endian/0xRRGGBB format)
- * dst[0] → Blue
- * dst[1] → Green
- * dst[2] → Red
- * dst[3] → Alpha (transparency level, if given)
- * 
- * Color byte storing:
- * 	'>>' to shift the bits according to the position we're looking for,
- * 	'& 0xFF' to keep only the last 8 bits.
- */
+* @brief dsf.
+* @param dst Destiny: pointer to the adress where the color bytes are stored, 
+* in the image framebuffer structure (specifically in img-data).
+* Calculation:
+* y * img->line_len: Bytes needed to skip to reach current line.
+* x * (img->bpp / 8): Bytes needed to skip to reach the current 'x' pixel.
+* img->data + (...): 
+*	We add this current pixel position to the begining of
+*	the framebuffer: destiny.
+* 
+* Each color component is written byte by byte:
+* (endian: Byte order (0: little-endian/0xRRGGBB format)
+* dst[0] → Blue
+* dst[1] → Green
+* dst[2] → Red
+* dst[3] → Alpha (transparency level, if given)
+* 
+* Color byte storing: 
+* '>>' to shift the bits according to the position we're looking for,
+* '& 0xFF' to keep only the last 8 bits.
+*/
 void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*dst;
