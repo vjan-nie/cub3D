@@ -1,0 +1,24 @@
+
+""" 
+Algoritmo DDA: Lanzar rayos 1 a 1 (1 rayo por cada bit de la imagen que se proyecta en la ventana)
+
+1) ¿Hacia adónde apunta el rayo? (dir_x, dir_y)
+
+2) ¿Cuánto avanza el rayo para cruzar una línea de la cuadrícula(grid)? (delta_x, delta_y)
+
+3) ¿Cuál es la primera línea vert y horiz que toca? (side_x. side_y)
+
+4) Iterar:
+
+	- Comparar side_x y side_y y avanzar a la celda correspondiente (el rayo avanza como en escalones o zig zag):
+		if (side_x < side_y) 
+			avanzamos en el eje x
+		else 
+			avanzamos en el eje y
+
+	- Sumamos delta_x o delta_y según corresponda y comprobamos la posición:
+		if (map[map_x][map_y] == '1')
+			el rayo ha chocado, terminamos de iterar y hacemos cálculos para dibujar.
+		else
+			seguimos iterando hasta que choque.
+  """

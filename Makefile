@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+         #
+#    By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 12:24:16 by vjan-nie          #+#    #+#              #
-#    Updated: 2025/11/27 11:21:37 by sergio-jime      ###   ########.fr        #
+#    Updated: 2025/12/04 11:48:26 by vjan-nie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRC				=	$(SRC_DIR)/$(CORE_DIR)/cub3d.c\
 					$(SRC_DIR)/$(RENDER_DIR)/player_utils.c\
 					$(SRC_DIR)/$(RENDER_DIR)/raycasting.c\
 					$(SRC_DIR)/$(RENDER_DIR)/raycasting_utils.c\
+					$(SRC_DIR)/$(RENDER_DIR)/raycasting_utils2.c\
 					$(SRC_DIR)/$(RENDER_DIR)/render.c\
 					$(SRC_DIR)/$(RENDER_DIR)/textures.c
 

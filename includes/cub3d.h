@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/29 17:04:45 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/04 11:49:48 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define TILE_SIZE 64
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
+# define MOVEMENT_SPEED 0.05
+# define ROTATION_SPEED 0.05
+# define FOV_ANGLE 0.66
 
 /* ************************************************************************** */
 /* Main Utils */
@@ -100,11 +103,14 @@ void	raycast(t_cub3d *cub);
 void	calc_line_params(t_cub3d *cub, t_ray *r);
 void	calc_step_side(t_player *p, t_ray *r);
 void	calc_delta(t_ray *r);
+int		clamp(int value, int min, int max);
 
 /* ************************************************************************** */
-/* Load textures */
+/* Textures */
 
 bool	load_textures(t_cub3d *cub);
+t_img	*select_wall_texture(t_cub3d *cub, t_ray *r);
+int		calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex);
 
 /* ************************************************************************** */
 /* Movement */
