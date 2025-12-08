@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/08 08:12:37 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/08 08:25:48 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define TILE_SIZE 64
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
-# define MOVEMENT_SPEED 0.05
-# define ROTATION_SPEED 0.05
+# define MOVEMENT_SPEED 0.025
+# define ROTATION_SPEED 0.025
 # define FOV_ANGLE 0.66
 
 /* ************************************************************************** */
