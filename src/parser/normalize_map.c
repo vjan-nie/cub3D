@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   normalize_map.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:31:50 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/29 19:40:06 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/08 07:48:14 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	normalize_map(t_map *map)
 		while (map->grid[y][x])
 		{
 			if (map->grid[y][x] == ' ')
-				map->grid[y][x] = '0';
+				map->grid[y][x] = '1';
 			x++;
 		}
 		y++;

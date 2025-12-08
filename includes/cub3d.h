@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 11:49:48 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/08 08:12:37 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		free_partial_grid(t_map *map, int filled);
 int		skip_config(char **lines);
 bool	is_valid_char(char c);
 bool	in_map(const char *line);
+int		parse_rgb(const char *str);
 
 /* ************************************************************************** */
 /* Player */
