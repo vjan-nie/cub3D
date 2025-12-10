@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:56:53 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 02:24:51 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/05 00:13:37 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * It orchestrates the setup and continuous execution of the cub3D Raycasting
  * engine.
  */
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 /**
  * @brief The core game loop function, executed on every frame refresh.
@@ -35,14 +35,14 @@
  * 3. Renders the new frame using the raycasting algorithm.
  * 4. Pushes the rendered image buffer to the window display.
  */
-static int	main_loop(t_cub3d *cub)
+static int main_loop(t_cub3d *cub)
 {
 	if (cub->key_code.esc)
 		return (close_window(cub));
 	update_player(cub);
 	render_frame(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win,
-		cub->frame.img_ptr, 0, 0);
+							cub->frame.img_ptr, 0, 0);
 	return (0);
 }
 
@@ -55,7 +55,7 @@ static int	main_loop(t_cub3d *cub)
  * @note If mlx_init() fails, it prints an error message via ft_error
  * and returns 0.
  */
-static int	init_graphics(t_cub3d *cub)
+static int init_graphics(t_cub3d *cub)
 {
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
@@ -75,7 +75,7 @@ static int	init_graphics(t_cub3d *cub)
  * 3) Load textures.
  * 4) Initialize player.
  */
-static bool	load_game(t_cub3d *cub, const char *path)
+static bool load_game(t_cub3d *cub, const char *path)
 {
 	if (!load_and_validate_map(&cub->map, path))
 		return (false);
@@ -98,7 +98,7 @@ static bool	load_game(t_cub3d *cub, const char *path)
  * @note Uses ft_bzero to zero-initialize the structure, which is vital
  * for safe cleanup.
  */
-static bool	init_cub3d(t_cub3d *cub, const char *path)
+static bool init_cub3d(t_cub3d *cub, const char *path)
 {
 	ft_bzero(cub, sizeof(t_cub3d));
 	if (!init_graphics(cub))
@@ -117,9 +117,9 @@ static bool	init_cub3d(t_cub3d *cub, const char *path)
  * @param argv The array of command-line argument strings.
  * @return int 0 on clean exit, 1 on error.
  */
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_cub3d	cub;
+	t_cub3d cub;
 
 	if (argc != 2)
 		return (ft_error("Usage: ./cub3D <map.cub>\n"), 1);

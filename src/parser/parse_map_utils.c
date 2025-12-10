@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/28 18:41:37 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/05 00:39:56 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
  * @brief Utility functions for parsing and validating map configuration
  * entries (colors and textures).
  */
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 /**
  * @brief Converts an "R,G,B" string representation into a single 32-bit integer
@@ -33,12 +33,12 @@
  * 5. Validates that each R, G, B value is within the [0, 255] range.
  * 6. Combines the values using bitwise shifts: `(r << 16) | (g << 8) | b`.
  */
-int	parse_rgb(const char *str)
+int parse_rgb(const char *str)
 {
-	char	**p;
-	int		r;
-	int		g;
-	int		b;
+	char **p;
+	int r;
+	int g;
+	int b;
 
 	p = ft_split(str, ',');
 	if (!p || !p[0] || !p[1] || !p[2])
@@ -61,10 +61,10 @@ int	parse_rgb(const char *str)
  * @param line The configuration line.
  * @return bool True on success, false on error.
  */
-static bool	parse_color(t_map *map, const char *line)
+static bool parse_color(t_map *map, const char *line)
 {
-	char	**split;
-	int		color;
+	char **split;
+	int color;
 
 	split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
@@ -108,10 +108,10 @@ static bool	parse_color(t_map *map, const char *line)
  * by `free_map`.
  * 5. The temporary split array is freed using `ft_free_array` before returning.
  */
-static bool	parse_texture(t_map *map, const char *line)
+static bool parse_texture(t_map *map, const char *line)
 {
-	char	**split;
-	int		index;
+	char **split;
+	int index;
 
 	split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
@@ -147,9 +147,9 @@ static bool	parse_texture(t_map *map, const char *line)
  * @return int The total number of valid configuration items found
  * (4 textures + 2 colors = 6), or 0 on error.
  */
-static int	parse_config_aux(t_map *map, char **lines, int parsed)
+static int parse_config_aux(t_map *map, char **lines, int parsed)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (lines[i] && parsed < 6)
@@ -185,9 +185,9 @@ static int	parse_config_aux(t_map *map, char **lines, int parsed)
  * @note This function relies on `parse_config_aux` to find and count the
  * configuration lines.
  */
-bool	parse_config(t_map *map, char **lines)
+bool parse_config(t_map *map, char **lines)
 {
-	int	parsed;
+	int parsed;
 
 	parsed = 0;
 	parsed = parse_config_aux(map, lines, parsed);

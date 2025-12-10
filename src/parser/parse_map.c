@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 09:58:26 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/29 19:22:08 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/05 00:32:19 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * Handles the calculation of map dimensions, memory allocation for the grid,
  * and copying the map data.
  */
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 /**
  * @brief Calculates the number of lines corresponding to the map block.
@@ -28,9 +28,9 @@
  * @param start The index where the map block begins (returned by `skip_config`).
  * @return int The total number of map lines (the map height).
  */
-static int	count_map_lines(char **lines, int start)
+static int count_map_lines(char **lines, int start)
 {
-	int	i;
+	int i;
 
 	i = start;
 	while (lines[i])
@@ -50,9 +50,9 @@ static int	count_map_lines(char **lines, int start)
  * @param h The height (number of lines) of the map.
  * @return int 1 on success, 0 on failure (memory allocation error).
  */
-static int	copy_map_lines(t_map *map, char **lines, int start, int h)
+static int copy_map_lines(t_map *map, char **lines, int start, int h)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < h)
@@ -90,10 +90,10 @@ static int	copy_map_lines(t_map *map, char **lines, int start, int h)
  * 5. **`copy_map_lines`**: Performs the deep copy of the map data.
  * 6. **Dimension Assignment**: Sets `map->height` and `map->width`.
  */
-bool	parse_map(t_map *map, char **lines)
+bool parse_map(t_map *map, char **lines)
 {
-	int	start;
-	int	h;
+	int start;
+	int h;
 
 	start = skip_config(lines);
 	h = count_map_lines(lines, start);

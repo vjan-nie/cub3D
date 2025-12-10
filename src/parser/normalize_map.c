@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 10:31:50 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/29 19:40:06 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/05 03:24:08 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * This process is crucial for preventing segmentation faults during boundary
  * checks in the raycasting loop.
  */
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 /**
  * @brief Pads a single map line with spaces until it reaches the
@@ -31,10 +31,10 @@
  * @return char* The newly padded string (dynamically allocated), or NULL on
  * malloc failure.
  */
-static char	*pad_line(char *src, int width)
+static char *pad_line(char *src, int width)
 {
-	int		len;
-	char	*dst;
+	int len;
+	char *dst;
 
 	len = ft_strlen(src);
 	if (len >= width)
@@ -65,11 +65,11 @@ static char	*pad_line(char *src, int width)
  * reallocating them via `pad_line`. The `map->width` is updated to the
  * new maximum (normalized) width.
  */
-void	normalize_map(t_map *map)
+void normalize_map(t_map *map)
 {
-	int	x;
-	int	y;
-	int	max;
+	int x;
+	int y;
+	int max;
 
 	max = get_max_line_length(map->grid);
 	map->width = max;
@@ -86,7 +86,7 @@ void	normalize_map(t_map *map)
 		while (map->grid[y][x])
 		{
 			if (map->grid[y][x] == ' ')
-				map->grid[y][x] = '0';
+				map->grid[y][x] = '1';
 			x++;
 		}
 		y++;
