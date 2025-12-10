@@ -6,7 +6,7 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 18:01:08 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/10 12:58:10 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/10 14:08:51 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * 0: vertical (x)
  * 1: horizontal (y)
  */
-t_img *select_wall_texture(t_cub3d *cub, t_ray *r)
+t_img	*select_wall_texture(t_cub3d *cub, t_ray *r)
 {
 	if (r->side == 0)
 	{
@@ -38,10 +38,10 @@ t_img *select_wall_texture(t_cub3d *cub, t_ray *r)
 /**
  * @brief Calculates the x axis coordinate of the texture.
  */
-int calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex)
+int	calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex)
 {
-	double wall_x;
-	int tex_x;
+	double	wall_x;
+	int		tex_x;
 
 	if (r->side == 0)
 		wall_x = cub->player.y + r->perp * r->dir_y;
@@ -59,10 +59,10 @@ int calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex)
  * MLX's image loader. Updates data on t_img structure,
  * which is the frame buffer.
  */
-static bool load_one_texture(t_cub3d *cub, t_img *tex, char *path)
+static bool	load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 {
-	int width;
-	int height;
+	int	width;
+	int	height;
 
 	width = 0;
 	height = 0;
@@ -72,7 +72,7 @@ static bool load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 	tex->width = width;
 	tex->height = height;
 	tex->data = mlx_get_data_addr(tex->img_ptr,
-								  &tex->bpp, &tex->line_len, &tex->endian);
+			&tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->data)
 		return (ft_error("Failed to get texture data\n"), false);
 	return (true);
@@ -81,9 +81,9 @@ static bool load_one_texture(t_cub3d *cub, t_img *tex, char *path)
 /**
  * @brief Checks if there is a valid path to find the wall textures.
  */
-static bool check_paths(t_map *map)
+static bool	check_paths(t_map *map)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 4)
@@ -98,9 +98,9 @@ static bool check_paths(t_map *map)
 /**
  * @brief Loads wall textures from the given map file paths.
  */
-bool load_textures(t_cub3d *cub)
+bool	load_textures(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	if (!check_paths(&cub->map))
 		return (false);

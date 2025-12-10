@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:29:05 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/08 08:25:48 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/10 14:05:37 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define MOVEMENT_SPEED 0.025
 # define ROTATION_SPEED 0.025
 # define FOV_ANGLE 0.66
+# define WALL_MARGIN 0.125
 
 /* ************************************************************************** */
 /* Main Utils */
