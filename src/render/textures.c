@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 18:01:08 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 09:58:26 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/10 14:08:51 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
-* @brief Gets the corresponding texture depending on the
-* ray's direction and the wall side (0-North, 1-South, 2-West, 3-East)
-* @note r->side refers to which kind of wall did the ray hit:
-* 0: vertical (x)
-* 1: horizontal (y)
-*/
+ * @brief Gets the corresponding texture depending on the
+ * ray's direction and the wall side (0-North, 1-South, 2-West, 3-East)
+ * @note r->side refers to which kind of wall did the ray hit:
+ * 0: vertical (x)
+ * 1: horizontal (y)
+ */
 t_img	*select_wall_texture(t_cub3d *cub, t_ray *r)
 {
 	if (r->side == 0)
 	{
 		if (r->step_x < 0)
-			return (&cub->textures[0]);
-		return (&cub->textures[1]);
+			return (&cub->textures[2]);
+		return (&cub->textures[3]);
 	}
 	else
 	{
 		if (r->step_y < 0)
-			return (&cub->textures[2]);
-		return (&cub->textures[3]);
+			return (&cub->textures[0]);
+		return (&cub->textures[1]);
 	}
 }
 
 /**
-* @brief Calculates the x axis coordinate of the texture.
-*/
+ * @brief Calculates the x axis coordinate of the texture.
+ */
 int	calc_wall_tex_x(t_cub3d *cub, t_ray *r, t_img *tex)
 {
 	double	wall_x;
