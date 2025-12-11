@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 14:20:36 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/11 13:30:53 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,36 +132,19 @@ static void	draw_wall_line_textured(t_cub3d *cub, t_ray *r, int x)
 }
 
 /**
-* @brief Full raycasting: We cast a ray for each column int the frame.
-* @details Algoritmo DDA-algorithm (Digital Differential Analyzer):
-* Cast one by one rays along the window frame (one ray per window image bit).
-
-1) ¿In which direction is the ray casted? (dir_x, dir_y)
-
-2) ¿How far does the ray get until it crosses a grid line? (delta_x, delta_y)
-
-3) ¿Which are the first horizontal and vertical lines 
-	that it touches?(side_x, side_y)
-
-4) Iterate:
-
-- Compare side_x and side_y and move forward to the 
-  closest next corresponding tile in the grid (zig zag form):
-
-	if (side_x < side_y) 
-		move forward through the x axis
-	else 
-		move forward through the y axis
-
-- We keep adding each progress to delta_x and delta_y correspondeingly, 
-  and we check the result position so far:
-
-	if (map[map_x][map_y] == '1')
-		the ray has found a wall: 
-			stop iterating and calculate the side of the wall in this column.
-	else
-		we keep iterating until we find a wall.
-*/
+ * @brief The main raycasting loop.
+ * Iterates through every vertical column of the screen to render the 3D scene.
+ * @param cub Pointer to the main t_cub3d structure.
+ * @details
+ * The algorithm (DDA) follows these steps for each vertical strip (column):
+ * 1. **Initialization:** Calculate ray direction and position.
+ * 2. **Step Calculation:** Determine delta distances and initial side
+ * distances.
+ * 3. **DDA Execution:** Step through the grid until a wall is hit.
+ * 4. **Projection:** Calculate the perpendicular distance (to avoid fish-eye)
+ * and determining line height.
+ * 5. **Rendering:** Select the texture and draw the vertical line.
+ */
 void	raycast(t_cub3d *cub)
 {
 	t_ray	r;
