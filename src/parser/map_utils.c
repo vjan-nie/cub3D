@@ -6,21 +6,20 @@
 /*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 17:03:18 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/11/27 17:13:05 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/11 13:24:50 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*
-** free_textures:
-** Libera las rutas de texturas NO/SO/EA/WE almacenadas
-** en map->tex_paths.
-**
-** Solo libera los strings, no imágenes MLX (eso lo hace cleanup).
-**
-** paths debe tener longitud 4 sí o sí.
-*/
+/**
+ * @brief Frees the texture path strings stored in the map structure.
+ * Iterates through the 4 cardinal directions (NO, SO, EA, WE) and frees
+ * the string memory if it was allocated.
+ * @param paths The array of strings containing the texture paths.
+ * @note This only frees the path strings, not the MLX image pointers
+ * (which are handled by the cleanup routine).
+ */
 void	free_textures(char **paths)
 {
 	int	i;
@@ -34,15 +33,15 @@ void	free_textures(char **paths)
 	}
 }
 
-/*
-** free_map:
-** Libera TODA la memoria asociada al mapa:
-** - El grid (mapa en sí)
-** - Las rutas de texturas
-**
-** No toca floor_color ni ceiling_color porque son ints.
-** No toca imágenes MLX de texturas, eso es trabajo de cleanup_and_exit.
-*/
+/**
+ * @brief Frees all dynamic memory associated with the map structure.
+ * This includes:
+ * - The map grid (2D array of characters).
+ * - The texture path strings.
+ * @param map Pointer to the t_map structure.
+ * @note It does not modify floor/ceiling colors (stack integers) nor
+ * MLX images (handled by cleanup_and_exit).
+ */
 void	free_map(t_map *map)
 {
 	int	i;
@@ -67,27 +66,23 @@ void	free_map(t_map *map)
 	}
 }
 
-/*
-** free_map_return:
-** Pequeña función de utilidad para poder hacer cosas como:
-**     return free_map_return(map);
-**
-** Básicamente libera el mapa y devuelve NULL.
-** Te permite escribir estructuras más limpias en el parser.
-*/
+/**
+ * @brief Utility function to free the map and return NULL in one step.
+ * Useful for cleaner error handling and return statements in the parser.
+ * @param map Pointer to the t_map structure to be freed.
+ * @return void* Always returns NULL.
+ */
 void	*free_map_return(t_map *map)
 {
 	free_map(map);
 	return (NULL);
 }
 
-/*
-** ft_free_array:
-** Sirve para cualquier array
-** de strings terminado en NULL.
-**
-** Es útil para liberar lo que sale de ft_split o funciones similares.
-*/
+/**
+ * @brief Frees a NULL-terminated array of strings.
+ * Commonly used to clean up the result of functions like ft_split.
+ * @param array The NULL-terminated array of strings to free.
+ */
 void	ft_free_array(char **array)
 {
 	int	i;
@@ -103,6 +98,15 @@ void	ft_free_array(char **array)
 	free(array);
 }
 
+/**
+ * @brief Frees a partially allocated map grid upon failure.
+ * Used during the parsing process if memory allocation fails mid-way
+ * through copying the map lines.
+ * @param map Pointer to the t_map structure.
+ * @param filled The number of lines successfully allocated before
+ * the error.
+ * @return int Always returns 0.
+ */
 int	free_partial_grid(t_map *map, int filled)
 {
 	int	i;

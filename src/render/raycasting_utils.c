@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:07:23 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 11:32:54 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/11 13:28:34 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void	calc_delta(t_ray *r)
 		r->delta_y = fabs(1.0 / r->dir_y);
 }
 
+/**
+ * @brief Helper function to calculate step and initial side distance
+ * for the X-axis.
+ * Determines if the step direction is positive (1) or negative (-1)
+ * and calculates the distance from the player to the first vertical grid line.
+ * @param p Pointer to the player structure.
+ * @param r Pointer to the ray structure.
+ * @param pos Boolean flag indicating if the ray direction is positive.
+ */
 static void	step_side_aux_x(t_player *p, t_ray *r, bool pos)
 {
 	if (pos)
@@ -49,6 +58,15 @@ static void	step_side_aux_x(t_player *p, t_ray *r, bool pos)
 		r->side_x = 1e-6;
 }
 
+/**
+ * @brief Helper function to calculate step and initial side distance
+ * for the Y-axis.
+ * Determines if the step direction is positive (1) or negative (-1)
+ * and calculates the distance from the player to the first horizontal grid line.
+ * @param p Pointer to the player structure.
+ * @param r Pointer to the ray structure.
+ * @param pos Boolean flag indicating if the ray direction is positive.
+ */
 static void	step_side_aux_y(t_player *p, t_ray *r, bool pos)
 {
 	if (pos)

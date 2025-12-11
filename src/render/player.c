@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:46:20 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/04 09:39:51 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/11 13:27:05 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,28 @@ static char	get_player_dir(t_map *map, t_player *p)
 	return (dir);
 }
 
+/**
+ * @brief Helper function to set the player's direction vector.
+ * Assigns the provided x and y values to the player's direction variables.
+ * @param p Pointer to the player structure.
+ * @param dx The X component of the direction vector.
+ * @param dy The Y component of the direction vector.
+ */
 static void	set_dir(t_player *p, double dx, double dy)
 {
 	p->dir_x = dx;
 	p->dir_y = dy;
 }
 
+/**
+ * @brief Helper function to set the camera plane vector.
+ * Assigns the provided x and y values to the player's camera plane variables.
+ * The camera plane is perpendicular to the direction vector and determines 
+ * the Field of View (FOV).
+ * @param p Pointer to the player structure.
+ * @param px The X component of the camera plane vector.
+ * @param py The Y component of the camera plane vector.
+ */
 static void	set_plane(t_player *p, double px, double py)
 {
 	p->plane_x = px;
