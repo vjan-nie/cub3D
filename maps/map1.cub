@@ -1,9 +1,9 @@
 NO ./textures/basic_NO.xpm
-SO              ./textures/basic_SO.xpm ljhlhjlh
+SO              ./textures/basic_SO.xpm
 WE         ./textures/basic_WE.xpm
 EA ./textures/basic_EA.xpm
 
-F      220,100,0
+F      220,100,0,0,0,0
 C    225,30,0
 
 111111
