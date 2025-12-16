@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/16 14:40:38 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 18:26:01 by sergio-jime      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,9 @@ static bool	parse_color(t_map *map, const char *line)
 	char	**split;
 	int		color;
 
-	split = ft_split(line, ' ');
-	if (!split || !split[0] || !split[1])
-		return (ft_free_array(split), ft_error("Invalid color line\n"), false);
-	if (split[2])
-		return (ft_free_array(split), ft_error("Too many rgb elements\n"), false);
+	split = parse_color_aux(line);
+	if (split == NULL)
+		return (false);
 	color = parse_rgb(split[1]);
 	if (color == -1)
 		return (ft_free_array(split), ft_error("Invalid RGB values\n"), false);
@@ -80,11 +78,9 @@ static bool	parse_texture(t_map *map, const char *line)
 	char	**split;
 	int		index;
 
-	split = ft_split(line, ' ');
-	if (!split || !split[0] || !split[1])
-		return (ft_free_array(split), ft_error("Invalid texture\n"), false);
-	if (split[2])
-		return (ft_free_array(split), ft_error("Too many texture elements\n"), false);
+	split = parse_texture_aux(line);
+	if (split == NULL)
+		return (false);
 	index = -1;
 	if (!ft_strncmp(split[0], "NO", 3))
 		index = 0;

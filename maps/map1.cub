@@ -1,10 +1,10 @@
 NO ./textures/basic_NO.xpm
-SO              ./textures/basic_SO.xpm
-WE         ./textures/basic_WE.xpm
+SO ./textures/basic_SO.xpm
+WE ./textures/basic_WE.xpm
 EA ./textures/basic_EA.xpm
 
-F      220,100,0,0,0,0
-C    225,30,0
+C 220,10,10
+F 65,65,65
 
 111111
 101001
