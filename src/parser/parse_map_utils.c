@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/08 08:13:33 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:40:38 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static bool	parse_color(t_map *map, const char *line)
 	split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
 		return (ft_free_array(split), ft_error("Invalid color line\n"), false);
+	if (split[2])
+		return (ft_free_array(split), ft_error("Too many rgb elements\n"), false);
 	color = parse_rgb(split[1]);
 	if (color == -1)
 		return (ft_free_array(split), ft_error("Invalid RGB values\n"), false);
@@ -81,6 +83,8 @@ static bool	parse_texture(t_map *map, const char *line)
 	split = ft_split(line, ' ');
 	if (!split || !split[0] || !split[1])
 		return (ft_free_array(split), ft_error("Invalid texture\n"), false);
+	if (split[2])
+		return (ft_free_array(split), ft_error("Too many texture elements\n"), false);
 	index = -1;
 	if (!ft_strncmp(split[0], "NO", 3))
 		index = 0;
@@ -117,6 +121,8 @@ static int	parse_config_aux(t_map *map, char **lines, int parsed)
 	int	i;
 
 	i = 0;
+	if (!*lines)
+		return (ft_error("Empty file\n"), false);
 	while (lines[i] && parsed < 6)
 	{
 		if (is_texture_line(lines[i]))
@@ -157,6 +163,6 @@ bool	parse_config(t_map *map, char **lines)
 	parsed = 0;
 	parsed = parse_config_aux(map, lines, parsed);
 	if (parsed != 6)
-		return (ft_error("Missing config entries\n"), false);
+		return (false);
 	return (true);
 }

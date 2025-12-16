@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_rotate.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:01:22 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/03 18:25:22 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:01:37 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	rotate_left(t_cub3d *cub)
 	double		rot;
 
 	p = &cub->player;
-	rot = -p->rot_speed;
+	rot = p->rot_speed;
 	rotate_dir_plane(p, rot);
 }
 
@@ -54,6 +54,6 @@ void	rotate_right(t_cub3d *cub)
 	double		rot;
 
 	p = &cub->player;
-	rot = p->rot_speed;
+	rot = -p->rot_speed;
 	rotate_dir_plane(p, rot);
 }

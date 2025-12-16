@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 16:41:44 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/11 13:30:53 by sergio-jime      ###   ########.fr       */
+/*   Updated: 2025/12/16 13:00:17 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	init_ray_vars(t_cub3d *cub, t_ray *r, int x)
 
 	p = &cub->player;
 	ray_offset = 2.0 * x / (double)cub->screen_width - 1.0;
-	r->dir_x = p->dir_x + p->plane_x * ray_offset;
-	r->dir_y = p->dir_y + p->plane_y * ray_offset;
+	r->dir_x = p->dir_x - p->plane_x * ray_offset;
+	r->dir_y = p->dir_y - p->plane_y * ray_offset;
 	r->map_x = (int)p->x;
 	r->map_y = (int)p->y;
 	if (r->map_y < 0)

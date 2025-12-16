@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_wasd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 17:00:28 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/02 14:01:35 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:09:23 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	move_left(t_cub3d *cub)
 
 	p = &cub->player;
 	speed = p->move_speed;
-	check_and_move(cub, -p->plane_x * speed, -p->plane_y * speed);
+	check_and_move(cub, p->plane_x * speed, p->plane_y * speed);
 }
 
 /**
@@ -65,5 +65,5 @@ void	move_right(t_cub3d *cub)
 
 	p = &cub->player;
 	speed = p->move_speed;
-	check_and_move(cub, p->plane_x * speed, p->plane_y * speed);
+	check_and_move(cub, -p->plane_x * speed, -p->plane_y * speed);
 }
