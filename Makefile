@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+         #
+#    By: sergio-jimenez <sergio-jimenez@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/17 12:24:16 by vjan-nie          #+#    #+#              #
-#    Updated: 2025/12/08 08:11:27 by vjan-nie         ###   ########.fr        #
+#    Updated: 2025/12/16 18:08:01 by sergio-jime      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRC				=	$(SRC_DIR)/$(CORE_DIR)/cub3d.c\
 					$(SRC_DIR)/$(PARSER_DIR)/parse_map.c\
 					$(SRC_DIR)/$(PARSER_DIR)/parse_map_utils.c\
 					$(SRC_DIR)/$(PARSER_DIR)/parse_map_utils2.c\
+					$(SRC_DIR)/$(PARSER_DIR)/parse_map_aux.c\
 					$(SRC_DIR)/$(PARSER_DIR)/validate_map.c\
 					$(SRC_DIR)/$(RENDER_DIR)/movement.c\
 					$(SRC_DIR)/$(RENDER_DIR)/move_rotate.c\
