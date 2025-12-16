@@ -6,7 +6,7 @@
 /*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 08:10:11 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/16 14:15:57 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:33:17 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	parse_rgb(const char *str)
 
 	p = ft_split(str, ',');
 	if (!p || !p[0] || !p[1] || !p[2])
-		return (ft_free_array(p), -1);
-	if (p[3])
 		return (ft_free_array(p), -1);
 	if (!in_valid_range(p[0]) || !in_valid_range(p[1]) || !in_valid_range(p[2]))
 		return (ft_free_array(p), -1);
