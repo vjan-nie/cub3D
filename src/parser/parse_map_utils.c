@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vjan-nie <vjan-nie@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: vjan-nie <vjan-nie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:55:46 by vjan-nie          #+#    #+#             */
-/*   Updated: 2025/12/08 08:13:33 by vjan-nie         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:15:17 by vjan-nie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ static int	parse_config_aux(t_map *map, char **lines, int parsed)
 	int	i;
 
 	i = 0;
+	if (!*lines)
+		return (ft_error("Empty file\n"), false);
 	while (lines[i] && parsed < 6)
 	{
 		if (is_texture_line(lines[i]))
@@ -157,6 +159,6 @@ bool	parse_config(t_map *map, char **lines)
 	parsed = 0;
 	parsed = parse_config_aux(map, lines, parsed);
 	if (parsed != 6)
-		return (ft_error("Missing config entries\n"), false);
+		return (false);
 	return (true);
 }
